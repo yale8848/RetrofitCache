@@ -70,7 +70,7 @@ Android Retrofit Okhttp Cache 帮助库, 此库依赖retrofit2,okhttp3，Retrofi
 
  - 添加cache control例子
 
- > @Cache注解只影响有网时的缓存策略,而且只能影响 http GET 请求
+ > @Cache注解只影响有网时的缓存策略,而且只缓存http GET 请求
  
  
    不走缓存例子
