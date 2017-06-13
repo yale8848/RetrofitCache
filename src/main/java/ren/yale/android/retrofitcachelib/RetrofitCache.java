@@ -85,11 +85,8 @@ public class RetrofitCache {
                         Method m = (Method) entry;
                         Cache cache =  m.getAnnotation(Cache.class);
                         if (cache!=null){
-                            if (mUrlMap==null){
-                                mUrlMap = new HashMap<String, Long>();
-                            }
                             long t =  cache.timeUnit().toSeconds(cache.time());
-                            mUrlMap.put(url, t);
+                            getUrlMap().put(url, t);
                             return t;
                         }
                     }
@@ -98,8 +95,15 @@ public class RetrofitCache {
                 }
             }
         }
-        mUrlMap.put(url, time);
+        getUrlMap().put(url, time);
         return time;
+    }
+
+    private Map getUrlMap(){
+        if (mUrlMap==null){
+            mUrlMap = new HashMap<String, Long>();
+        }
+        return  mUrlMap;
     }
 
     public void addRetrofit(Retrofit retrofit){
