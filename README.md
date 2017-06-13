@@ -56,7 +56,7 @@ Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
 
  - add cache control
 
- > the Cache Annotation only affect the cache strategy when have net connection;
+ > the Cache Annotation only affect the cache strategy when have net connection,and only effect with @GET request
 
    no cached
 
