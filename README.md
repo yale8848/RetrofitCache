@@ -1,5 +1,8 @@
 # RetrofitCache
-Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
+
+[中文文档](https://github.com/yale8848/RetrofitCache/blob/master/README_CN.MD)
+
+Android Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
 
 
 ## Useage:
@@ -69,7 +72,7 @@ Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
 
  - add cache control
 
- > the Cache Annotation only affect the cache strategy when have net connection,and only effect with @GET request
+ > the Cache Annotation only affect the cache strategy when have net connection,and only cached with @GET request
 
    no cached
 
