@@ -54,6 +54,19 @@ Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
  > if add CacheForceInterceptorNoNet make force cache when not have net connection ,if only add CacheInterceptorOnNet,
  the same cache strategy no matter have net connnetion
 
+- add retrofit
+
+```
+ Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .client(getOkHttpClient())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+ RetrofitCache.getInatance().addRetrofit(retrofit);
+```
+
+
  - add cache control
 
  > the Cache Annotation only affect the cache strategy when have net connection,and only effect with @GET request
