@@ -1,19 +1,17 @@
 # RetrofitCache
-
-[中文文档](https://github.com/yale8848/RetrofitCache/blob/master/README_CN.MD)
-
-Android Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
+Android Retrofit Okhttp Cache 帮助库, 此库依赖retrofit2,okhttp3，RetrofitCache主要功能是无网，有网皆可缓存，有网缓存可以针对每一个接口配置不同的缓存时间；
+用注解配置，让使用更简单；
 
 
-## Useage:
+## 使用方法:
 
- - add jenter lib
+ - 添加 jenter lib
 
  ```
  compile 'ren.yale.android:retrofitcachelib:0.0.3'
  ```
 
- if you had use retrofit2 and okhttp3 in your project please exclude
+ 如果你的工程已经添加retrofit2 and okhttp3库，可以去掉相应的库
 
 
  ```
@@ -24,13 +22,13 @@ Android Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
 
  ```
 
- - init in android Application
+ - 在Android Application里初始化
 
  ```
   RetrofitCache.getInatance().init(this);
  ```
 
- - config okhttp cache dir when init OkHttpClient
+ - cOkHttpClient初始化时配置缓存目录
 
  ```
   okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
@@ -43,7 +41,7 @@ Android Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
 
  ```
 
-- add okhttp cache Interceptor
+- 给okhttp添加拦截器
 
  ```
   okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
@@ -54,10 +52,10 @@ Android Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
 
  ```
 
- > if add CacheForceInterceptorNoNet make force cache when not have net connection ,if only add CacheInterceptorOnNet,
- the same cache strategy no matter have net connnetion
+ > 添加CacheForceInterceptorNoNet作用是在无网时强制走缓存,如果只添加了CacheInterceptorOnNet,那么在有网和无网的缓存策略就会一样
+ 
 
-- add retrofit
+- 添加retrofit对象
 
 ```
  Retrofit retrofit = new Retrofit.Builder()
@@ -70,11 +68,12 @@ Android Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
 ```
 
 
- - add cache control
+ - 添加cache control例子
 
- > the Cache Annotation only affect the cache strategy when have net connection,and only cached with @GET request
-
-   no cached
+ > @Cache注解只影响有网时的缓存策略,而且只缓存http GET 请求
+ 
+ 
+   不走缓存例子
 
   ```
   @Cache()
@@ -87,7 +86,7 @@ Android Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
    Observable<HttpResult> test();
   ```
 
- 20 seconds cached
+ 缓存设置为20秒
 
  ```
  @Cache(time = 20)
@@ -96,7 +95,8 @@ Android Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
 
  ```
 
- 20 mininuts cached
+ 
+ 缓存设置为20分钟
 
  ```
  @Cache(time = 20,timeUnit = TimeUnit.MINUTES)
@@ -105,7 +105,7 @@ Android Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
 
  ```
 
-- proguard-rule
+- 混淆配置
 
 ```
 -dontwarn retrofit2.**
