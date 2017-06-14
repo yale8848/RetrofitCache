@@ -19,7 +19,7 @@ public class CacheInterceptorOnNet implements Interceptor {
         Response response = chain.proceed(request);
         LogUtil.d("get data from net = "+response.code());
         String url = request.url().url().toString();
-        Long maxAge = RetrofitCache.getInatance().getServiceMethod(url);
+        Long maxAge = RetrofitCache.getInatance().getCacheTime(url);
         return   response.newBuilder()
                 .removeHeader("Cache-Control")
                 .header("Cache-Control", "public,max-age="+maxAge)

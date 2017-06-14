@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.HttpUrl;
 import ren.yale.android.retrofitcachelib.anno.Cache;
@@ -22,12 +23,15 @@ public class RetrofitCache {
     private Map<String,Long> mUrlMap;
 
     private Context mContext;
+    private Long mDefaultTime = 0L;
+    private TimeUnit mDefaultTimeUnit =TimeUnit.SECONDS;
 
     private RetrofitCache(){
     }
 
-    public void init(Context context){
+    public RetrofitCache init(Context context){
         mContext = context.getApplicationContext();
+        return this;
     }
     public Context getContext(){
         return mContext;
@@ -55,11 +59,16 @@ public class RetrofitCache {
         }
         return mRetrofit;
     }
-    public Long getServiceMethod(String url){
 
-
-        Long time = 0L;
-
+    public RetrofitCache setDefaultTime(long time){
+        mDefaultTime = time;
+        return this;
+    }
+    public RetrofitCache setDefaultTimeUnit(TimeUnit timeUnit){
+        mDefaultTimeUnit = timeUnit;
+        return this;
+    }
+    public Long getCacheTime(String url){
         if (mUrlMap!=null){
             Long type = mUrlMap.get(url);
             if (type!=null){
@@ -85,9 +94,17 @@ public class RetrofitCache {
                         Method m = (Method) entry;
                         Cache cache =  m.getAnnotation(Cache.class);
                         if (cache!=null){
-                            long t =  cache.timeUnit().toSeconds(cache.time());
-                            getUrlMap().put(url, t);
-                            return t;
+                            TimeUnit timeUnit =  mDefaultTimeUnit;
+                            if (cache.timeUnit() != TimeUnit.NANOSECONDS){
+                                timeUnit = cache.timeUnit();
+                            }
+                            long t = mDefaultTime;
+                            if (cache.time() != -1){
+                                t = cache.time();
+                            }
+                            long tm =  timeUnit.toSeconds(t);
+                            getUrlMap().put(url, tm);
+                            return tm;
                         }
                     }
                 } catch (Exception e) {
@@ -95,8 +112,8 @@ public class RetrofitCache {
                 }
             }
         }
-        getUrlMap().put(url, time);
-        return time;
+        getUrlMap().put(url, mDefaultTimeUnit.toSeconds(mDefaultTime));
+        return mDefaultTimeUnit.toSeconds(mDefaultTime);
     }
 
     private Map getUrlMap(){
@@ -106,7 +123,7 @@ public class RetrofitCache {
         return  mUrlMap;
     }
 
-    public void addRetrofit(Retrofit retrofit){
+    public RetrofitCache addRetrofit(Retrofit retrofit){
         try {
 
             Class cls = retrofit.getClass();
@@ -121,6 +138,8 @@ public class RetrofitCache {
         catch (Exception e) {
             e.printStackTrace();
         }
+
+        return this;
     }
 
 }

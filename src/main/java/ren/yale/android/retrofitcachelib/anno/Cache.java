@@ -15,6 +15,6 @@ import java.util.concurrent.TimeUnit;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Cache {
-    TimeUnit timeUnit()  default TimeUnit.SECONDS;
-    int time() default 0;
+    TimeUnit timeUnit()  default TimeUnit.NANOSECONDS;
+    long time() default -1;
 }
