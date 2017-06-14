@@ -2,7 +2,7 @@
 
 [中文文档](https://github.com/yale8848/RetrofitCache/blob/master/README_CN.MD)
 
-Android Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
+Android Retrofit Rxjava Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3,rx1
 
 
 ## Useage:
@@ -72,9 +72,16 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
- RetrofitCache.getInatance().addRetrofit(retrofit);
-```
 
+ ** RetrofitCache.getInatance().addRetrofit(retrofit); **
+
+```
+- add rx Observable compose
+
+```
+ api.test().compose(CacheTransformer.emptyTransformer())...
+
+```
 
  - add cache control
 
@@ -114,6 +121,8 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 - proguard-rule
 
 ```
+-keepattributes *Annotation*
+
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
 

@@ -1,5 +1,5 @@
 # RetrofitCache
-Android Retrofit Okhttp Cache 帮助库, 此库依赖retrofit2,okhttp3，RetrofitCache主要功能是无网，有网皆可缓存，有网缓存可以针对每一个接口配置不同的缓存时间；
+Android Retrofit Rxjava Okhttp Cache 帮助库, 此库依赖retrofit2,okhttp3，rx1,RetrofitCache主要功能是无网，有网皆可缓存，有网缓存可以针对每一个接口配置不同的缓存时间；
 用注解配置，让使用更简单；
 
 
@@ -72,7 +72,12 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
                 .build();
  RetrofitCache.getInatance().addRetrofit(retrofit);
 ```
+- 添加 rx Observable compose
 
+```
+ api.test().compose(CacheTransformer.emptyTransformer())...
+
+```
 
  - 添加cache control例子
 
@@ -114,6 +119,9 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 - 混淆配置
 
 ```
+
+-keepattributes *Annotation*
+
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
 
