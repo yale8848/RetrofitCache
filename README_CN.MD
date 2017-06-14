@@ -8,14 +8,14 @@ Android Retrofit Okhttp Cache 帮助库, 此库依赖retrofit2,okhttp3，Retrofi
  - 添加 jenter lib
 
  ```
- compile 'ren.yale.android:retrofitcachelib:0.0.3'
+ compile 'ren.yale.android:retrofitcachelib:0.1.0'
  ```
 
  如果你的工程已经添加retrofit2 and okhttp3库，可以去掉相应的库
 
 
  ```
- compile ('ren.yale.android:retrofitcachelib:0.0.3') {
+ compile ('ren.yale.android:retrofitcachelib:0.1.0') {
     exclude module: 'okhttp-urlconnection', group: 'com.squareup.okhttp3'
     exclude module: 'retrofit', group: 'com.squareup.retrofit2'
  }
@@ -27,6 +27,12 @@ Android Retrofit Okhttp Cache 帮助库, 此库依赖retrofit2,okhttp3，Retrofi
  ```
   RetrofitCache.getInatance().init(this);
  ```
+
+也可以修改默认配置，默认time=0，timeUnit = TimeUnit.SECONDS
+
+```
+RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setDefaultTime(1);
+```
 
  - cOkHttpClient初始化时配置缓存目录
 

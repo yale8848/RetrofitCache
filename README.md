@@ -10,14 +10,14 @@ Android Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
  - add jenter lib
 
  ```
- compile 'ren.yale.android:retrofitcachelib:0.0.3'
+ compile 'ren.yale.android:retrofitcachelib:0.1.0'
  ```
 
  if you had use retrofit2 and okhttp3 in your project please exclude
 
 
  ```
- compile ('ren.yale.android:retrofitcachelib:0.0.3') {
+ compile ('ren.yale.android:retrofitcachelib:0.1.0') {
     exclude module: 'okhttp-urlconnection', group: 'com.squareup.okhttp3'
     exclude module: 'retrofit', group: 'com.squareup.retrofit2'
  }
@@ -29,6 +29,12 @@ Android Retrofit Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3
  ```
   RetrofitCache.getInatance().init(this);
  ```
+
+also can moidify default config , default time=0，timeUnit = TimeUnit.SECONDS
+
+```
+RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setDefaultTime(1);
+```
 
  - config okhttp cache dir when init OkHttpClient
 
