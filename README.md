@@ -123,12 +123,44 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 - proguard-rule
 
 ```
--keepattributes *Annotation*
-
--dontwarn retrofit2.**
--keep class retrofit2.** { *; }
+-keepattributes *Annotation*,InnerClasses
 
 -dontwarn ren.yale.android.retrofitcachelib.**
 -keep class ren.yale.android.retrofitcachelib.** { *; }
+
+#retrofit2
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+-dontwarn org.robovm.**
+-keep class org.robovm.** { *; }
+
+#okhttp3
+-dontwarn com.squareup.okhttp3.**
+-keep class com.squareup.okhttp3.** { *;}
+-keep class okhttp3.** { *;}
+-keep class okio.** { *;}
+-dontwarn sun.security.**
+-keep class sun.security.** { *;}
+-dontwarn okio.**
+-dontwarn okhttp3.**
+
+#rxjava
+-dontwarn rx.**
+-keep class rx.** { *; }
+
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+ long producerIndex;
+ long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+ rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+ rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
 
 ```
