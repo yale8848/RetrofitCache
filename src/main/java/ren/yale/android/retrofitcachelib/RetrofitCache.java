@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.HttpUrl;
 import okhttp3.Request;
 import ren.yale.android.retrofitcachelib.anno.Cache;
 import retrofit2.Retrofit;
@@ -88,58 +87,6 @@ public class RetrofitCache {
     }
     public TimeUnit getDefaultTimeUnit(){
         return mDefaultTimeUnit;
-    }
-    private String getRetrofitDeclareUrl(Object o) throws Exception{
-        Class   ServiceMethod =  Class.forName("retrofit2.ServiceMethod");
-        Field baseUrl =  ServiceMethod.getDeclaredField("baseUrl");
-        baseUrl.setAccessible(true);
-        HttpUrl httpurl = (HttpUrl) baseUrl.get(o);
-
-        Field relativeUrl = ServiceMethod.getDeclaredField("relativeUrl");
-        relativeUrl.setAccessible(true);
-        String relativeUrlStr = (String) relativeUrl.get(o);
-
-        String serviceUrl = httpurl.url().toString()+relativeUrlStr;
-
-        Field parameterHandlers = ServiceMethod.getDeclaredField("parameterHandlers");
-        parameterHandlers.setAccessible(true);
-
-        Class   path =  Class.forName("retrofit2.ParameterHandler$Path");
-        Field fPathName = path.getDeclaredField("name");
-        fPathName.setAccessible(true);
-
-        Class   query =  Class.forName("retrofit2.ParameterHandler$Query");
-        Field  fQueryName = query.getDeclaredField("name");
-        fQueryName.setAccessible(true);
-
-        Field fcallAdapter = ServiceMethod.getDeclaredField("callAdapter");
-        fcallAdapter.setAccessible(true);
-        Object callAdapter = fcallAdapter.get(o);
-
-/*        Class  QueryMap =  Class.forName("retrofit2.ParameterHandler$QueryMap");
-        Class father = QueryMap.getSuperclass();
-        Method mArray = father.getDeclaredMethod("array");
-        mArray.setAccessible(true);*/
-
-
-        Object[] os= (Object[]) parameterHandlers.get(o);
-
-        String name = "";
-        if (os!=null){
-            for(Object ob :os){
-                if (ob.toString().indexOf("$Path")>0){
-                    name = (String) fPathName.get(ob);
-                }else if (ob.toString().indexOf("$QueryMap")>0){
-
-                } else if (ob.toString().indexOf("$Query")>0){
-                    name = (String) fQueryName.get(ob);
-                }
-            }
-        }
-
-        return name;
-
-
     }
     public Long getCacheTime(String url){
         if (mUrlMap!=null){

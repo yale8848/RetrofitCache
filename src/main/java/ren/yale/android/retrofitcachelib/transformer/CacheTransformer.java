@@ -1,6 +1,8 @@
 package ren.yale.android.retrofitcachelib.transformer;
 
 
+import android.util.Log;
+
 import java.lang.reflect.Field;
 
 import ren.yale.android.retrofitcachelib.RetrofitCache;
@@ -13,6 +15,8 @@ import rx.internal.operators.OnSubscribeLift;
 
 public class CacheTransformer {
 
+    private static final String TAG="CacheTransformer";
+
     public static <T> Observable.Transformer<T, T> emptyTransformer() {
 
         return new Observable.Transformer<T, T>() {
@@ -22,6 +26,8 @@ public class CacheTransformer {
                 Object serviceMethodObj;
                 Object [] args;
                 try {
+
+                    long startTime = System.currentTimeMillis();
 
                     fdOnSubscribe = tObservable.getClass().getDeclaredField("onSubscribe");
                     fdOnSubscribe.setAccessible(true);
@@ -48,6 +54,7 @@ public class CacheTransformer {
 
                    serviceMethodObj =  fdserviceMethod.get(OkhttpCallObj);
 
+                    Log.d(TAG,(System.currentTimeMillis()-startTime)+"ms");
                     if (serviceMethodObj!=null){
                         RetrofitCache.getInatance().addMethodInfo(serviceMethodObj,args);
                     }
