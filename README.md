@@ -10,7 +10,7 @@ Android Retrofit Rxjava Okhttp Cache util lib , this lib dependent on retrofit2,
  - add jenter lib
 
  ```
- compile 'ren.yale.android:retrofitcachelib:0.1.1'
+ compile 'ren.yale.android:retrofitcachelib:0.1.2'
  ```
 
  if you had use retrofit2 and okhttp3 in your project please exclude

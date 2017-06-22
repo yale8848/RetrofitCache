@@ -8,7 +8,7 @@ Android Retrofit Rxjava Okhttp Cache 帮助库, 此库依赖retrofit2,okhttp3，
  - 添加 jenter lib
 
  ```
- compile 'ren.yale.android:retrofitcachelib:0.1.1'
+ compile 'ren.yale.android:retrofitcachelib:0.1.2'
  ```
 
  如果你的工程已经添加retrofit2 and okhttp3库，可以去掉相应的库
