@@ -95,7 +95,6 @@ public class RetrofitCache {
                 return type;
             }
         }
-
         for (Map serviceMethodCache:mVector) {
 
             for (Object entry:serviceMethodCache.keySet()){
@@ -120,17 +119,19 @@ public class RetrofitCache {
                                 long tm =  timeUnit.toSeconds(t);
                                 getUrlMap().put(url, tm);
                                 return tm;
+                            }else{
+                                getUrlMap().put(url, 0);
+                                return 0L;
                             }
                         }
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-        getUrlMap().put(url, mDefaultTimeUnit.toSeconds(mDefaultTime));
-        return mDefaultTimeUnit.toSeconds(mDefaultTime);
+        getUrlMap().put(url, 0);
+        return 0L;
     }
     private Map getUrlMap(){
         if (mUrlMap==null){
