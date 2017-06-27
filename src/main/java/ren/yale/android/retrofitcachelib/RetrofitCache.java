@@ -120,7 +120,7 @@ public class RetrofitCache {
                                 getUrlMap().put(url, tm);
                                 return tm;
                             }else{
-                                getUrlMap().put(url, 0);
+                                getUrlMap().put(url, 0L);
                                 return 0L;
                             }
                         }
@@ -130,7 +130,7 @@ public class RetrofitCache {
                 }
             }
         }
-        getUrlMap().put(url, 0);
+        getUrlMap().put(url, 0L);
         return 0L;
     }
     private Map getUrlMap(){
