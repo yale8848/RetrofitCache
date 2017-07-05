@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Request;
 import ren.yale.android.retrofitcachelib.anno.Cache;
+import ren.yale.android.retrofitcachelib.anno.Mock;
 import retrofit2.Retrofit;
 
 /**
@@ -88,6 +89,35 @@ public class RetrofitCache {
     public TimeUnit getDefaultTimeUnit(){
         return mDefaultTimeUnit;
     }
+
+    public String getMockData(String url){
+        for (Map serviceMethodCache:mVector) {
+
+            for (Object entry:serviceMethodCache.keySet()){
+                Object o = serviceMethodCache.get(entry);
+                try {
+
+                    if (mUrlAragsMap.containsKey(url)){
+                        Object[] args = (Object[]) mUrlAragsMap.get(url);
+                        String reqUrl =  buildRequestUrl(o,args);
+                        if (reqUrl.equals(url)){
+                            Method m = (Method) entry;
+                            Mock mock =  m.getAnnotation(Mock.class);
+                            if (mock!=null){
+                                return mock.value();
+                            }
+                            return null;
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null;
+    }
+
     public Long getCacheTime(String url){
         if (mUrlMap!=null){
             Long type = mUrlMap.get(url);

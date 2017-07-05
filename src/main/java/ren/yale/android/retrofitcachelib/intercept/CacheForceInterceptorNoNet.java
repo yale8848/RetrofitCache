@@ -14,11 +14,15 @@ import ren.yale.android.retrofitcachelib.util.NetUtils;
  * Created by Yale on 2017/6/13.
  */
 
-public class CacheForceInterceptorNoNet implements Interceptor  {
+public class CacheForceInterceptorNoNet extends BaseInterceptor implements Interceptor  {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
+        Response  mockResponse = mockResponse(chain);
+        if (mockResponse!=null){
+            return mockResponse;
+        }
        if (!NetUtils.isConnectNet(RetrofitCache.getInatance().getContext())){
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)

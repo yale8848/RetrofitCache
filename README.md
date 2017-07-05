@@ -10,14 +10,14 @@ Android Retrofit Rxjava Okhttp Cache util lib , this lib dependent on retrofit2,
  - add jenter lib
 
  ```
- compile 'ren.yale.android:retrofitcachelib:0.1.5'
+ compile 'ren.yale.android:retrofitcachelib:0.2.0'
  ```
 
  if you had use retrofit2 and okhttp3 in your project please exclude
 
 
  ```
- compile ('ren.yale.android:retrofitcachelib:0.1.5') {
+ compile ('ren.yale.android:retrofitcachelib:0.2.0') {
         exclude module: 'okhttp-urlconnection', group: 'com.squareup.okhttp3'
         exclude module: 'retrofit', group: 'com.squareup.retrofit2'
         exclude module: 'rxjava', group: 'io.reactivex'
@@ -122,6 +122,14 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
   Observable<HttpResult> test();
   ```
 
+- add mock data
+
+  ```
+  @Mock(value = "{\"data\":\"mockdata\"}")
+  @GET("users")
+  Observable<HttpResult> test();
+  ```
+
 - proguard-rule
 
 ```
@@ -166,3 +174,8 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 }
 
 ```
+
+## Change log
+- 0.2.0 add @Mock
+- 0.1.6 fix default time error
+- 0.1.5 add set default time api
