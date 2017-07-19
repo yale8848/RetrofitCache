@@ -10,10 +10,10 @@ Android Retrofit Rxjava Okhttp Cache util lib , this lib dependent on retrofit2,
 
 - no cached
 
-  ```
-   @GET("users")
-   Observable<HttpResult> test();
-  ```
+```
+@GET("users")
+Observable<HttpResult> test();
+```
 
 - 20 seconds cached
 
@@ -21,7 +21,6 @@ Android Retrofit Rxjava Okhttp Cache util lib , this lib dependent on retrofit2,
  @Cache(time = 20)
  @GET("users")
  Observable<HttpResult> test();
-
  ```
 
 - 20 mininuts cached
@@ -30,24 +29,23 @@ Android Retrofit Rxjava Okhttp Cache util lib , this lib dependent on retrofit2,
  @Cache(time = 20,timeUnit = TimeUnit.MINUTES)
  @GET("users")
  Observable<HttpResult> test();
-
  ```
 
 - default time cached，default is 0s
 
-  ```
-  @Cache()
-  @GET("users")
-  Observable<HttpResult> test();
-  ```
+```
+@Cache()
+@GET("users")
+Observable<HttpResult> test();
+```
 
 - add mock data
 
-  ```
-  @Mock(value = "{\"data\":\"mockdata\"}")
-  @GET("users")
-  Observable<HttpResult> test();
-  ```
+```
+@Mock(value = "{\"data\":\"mockdata\"}")
+@GET("users")
+Observable<HttpResult> test();
+```
 
 
 ## How to use:

@@ -8,10 +8,10 @@ Android Retrofit Rxjava Okhttp Cache 帮助库, 此库依赖retrofit2,okhttp3，
 
 - 不走缓存例子
 
-  ```
-   @GET("users")
-   Observable<HttpResult> test();
-  ```
+```
+ @GET("users")
+ Observable<HttpResult> test();
+```
 
 - 缓存设置为20秒
 
@@ -19,9 +19,7 @@ Android Retrofit Rxjava Okhttp Cache 帮助库, 此库依赖retrofit2,okhttp3，
  @Cache(time = 20)
  @GET("users")
  Observable<HttpResult> test();
-
  ```
-
 
 - 缓存设置为20分钟
 
@@ -29,16 +27,15 @@ Android Retrofit Rxjava Okhttp Cache 帮助库, 此库依赖retrofit2,okhttp3，
  @Cache(time = 20,timeUnit = TimeUnit.MINUTES)
  @GET("users")
  Observable<HttpResult> test();
-
  ```
 
 - 默认时间缓存,默认是0秒
 
-  ```
-  @Cache()
-  @GET("users")
-  Observable<HttpResult> test();
-  ```
+ ```
+ @Cache()
+ @GET("users")
+ Observable<HttpResult> test();
+ ```
 
 
 - 添加模拟数据
