@@ -2,6 +2,54 @@
 Android Retrofit Rxjava Okhttp Cache 帮助库, 此库依赖retrofit2,okhttp3，rx1,RetrofitCache主要功能是无网，有网皆可缓存，有网缓存可以针对每一个接口配置不同的缓存时间；
 用注解配置，让使用更简单；
 
+## 应用
+
+ > @Cache注解只影响有网时的缓存策略,而且只缓存http GET 请求
+
+- 不走缓存例子
+
+  ```
+   @GET("users")
+   Observable<HttpResult> test();
+  ```
+
+- 缓存设置为20秒
+
+ ```
+ @Cache(time = 20)
+ @GET("users")
+ Observable<HttpResult> test();
+
+ ```
+
+
+- 缓存设置为20分钟
+
+ ```
+ @Cache(time = 20,timeUnit = TimeUnit.MINUTES)
+ @GET("users")
+ Observable<HttpResult> test();
+
+ ```
+
+- 默认时间缓存,默认是0秒
+
+  ```
+  @Cache()
+  @GET("users")
+  Observable<HttpResult> test();
+  ```
+
+
+- 添加模拟数据
+
+  ```
+  @Mock(value = "{\"data\":\"mockdata\"}")
+  @GET("users")
+  Observable<HttpResult> test();
+  ```
+
+
 
 ## 使用方法:
 
@@ -80,54 +128,6 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
  api.test().compose(CacheTransformer.emptyTransformer())...
 
 ```
-
- - 添加cache control例子
-
- > @Cache注解只影响有网时的缓存策略,而且只缓存http GET 请求
- 
- 
-   不走缓存例子
-
-  ```
-   @GET("users")
-   Observable<HttpResult> test();
-  ```
-
- 缓存设置为20秒
-
- ```
- @Cache(time = 20)
- @GET("users")
- Observable<HttpResult> test();
-
- ```
-
- 
- 缓存设置为20分钟
-
- ```
- @Cache(time = 20,timeUnit = TimeUnit.MINUTES)
- @GET("users")
- Observable<HttpResult> test();
-
- ```
-
-默认时间缓存,默认是0秒
-
-  ```
-  @Cache()
-  @GET("users")
-  Observable<HttpResult> test();
-  ```
-
-
-- 添加模拟数据
-
-  ```
-  @Mock(value = "{\"data\":\"mockdata\"}")
-  @GET("users")
-  Observable<HttpResult> test();
-  ```
 
 
 - 混淆配置

@@ -4,8 +4,53 @@
 
 Android Retrofit Rxjava Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3,rx1
 
+## Usage
 
-## Useage:
+ > the Cache Annotation only affect the cache strategy when have net connection,and only cached with @GET request
+
+- no cached
+
+  ```
+   @GET("users")
+   Observable<HttpResult> test();
+  ```
+
+- 20 seconds cached
+
+ ```
+ @Cache(time = 20)
+ @GET("users")
+ Observable<HttpResult> test();
+
+ ```
+
+- 20 mininuts cached
+
+ ```
+ @Cache(time = 20,timeUnit = TimeUnit.MINUTES)
+ @GET("users")
+ Observable<HttpResult> test();
+
+ ```
+
+- default time cached，default is 0s
+
+  ```
+  @Cache()
+  @GET("users")
+  Observable<HttpResult> test();
+  ```
+
+- add mock data
+
+  ```
+  @Mock(value = "{\"data\":\"mockdata\"}")
+  @GET("users")
+  Observable<HttpResult> test();
+  ```
+
+
+## How to use:
 
  - add jenter lib
 
@@ -85,50 +130,7 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 
 ```
 
- - add cache control
 
- > the Cache Annotation only affect the cache strategy when have net connection,and only cached with @GET request
-
-   no cached
-
-  ```
-   @GET("users")
-   Observable<HttpResult> test();
-  ```
-
- 20 seconds cached
-
- ```
- @Cache(time = 20)
- @GET("users")
- Observable<HttpResult> test();
-
- ```
-
- 20 mininuts cached
-
- ```
- @Cache(time = 20,timeUnit = TimeUnit.MINUTES)
- @GET("users")
- Observable<HttpResult> test();
-
- ```
-
- default time cached，default is 0s
-
-  ```
-  @Cache()
-  @GET("users")
-  Observable<HttpResult> test();
-  ```
-
-- add mock data
-
-  ```
-  @Mock(value = "{\"data\":\"mockdata\"}")
-  @GET("users")
-  Observable<HttpResult> test();
-  ```
 
 - proguard-rule
 
