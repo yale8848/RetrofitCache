@@ -26,41 +26,40 @@ public class CacheTransformer {
                 try {
 
                     long startTime = System.currentTimeMillis();
-
                     fdOnSubscribe = tObservable.getClass().getDeclaredField("onSubscribe");
                     fdOnSubscribe.setAccessible(true);
-                    OnSubscribeLift onSubscribe = (OnSubscribeLift) fdOnSubscribe.get(tObservable);
+                    Object object = fdOnSubscribe.get(tObservable);
+                    if (object instanceof OnSubscribeLift){
+                        OnSubscribeLift onSubscribe = (OnSubscribeLift) fdOnSubscribe.get(tObservable);
 
-                    Field fdparent =  onSubscribe.getClass().getDeclaredField("parent");
-                    fdparent.setAccessible(true);
-                   Object onSubscribeObj =  fdparent.get(onSubscribe);
+                        Field fdparent =  onSubscribe.getClass().getDeclaredField("parent");
+                        fdparent.setAccessible(true);
+                        Object onSubscribeObj =  fdparent.get(onSubscribe);
 
-                    Class cls  = Class.forName("retrofit2.adapter.rxjava.RxJavaCallAdapterFactory$CallOnSubscribe");
+                        Class cls  = Class.forName("retrofit2.adapter.rxjava.RxJavaCallAdapterFactory$CallOnSubscribe");
 
-                    Field foriginalCall = cls.getDeclaredField("originalCall");
-                    foriginalCall.setAccessible(true);
+                        Field foriginalCall = cls.getDeclaredField("originalCall");
+                        foriginalCall.setAccessible(true);
 
-                   Object OkhttpCallObj  = foriginalCall.get(onSubscribeObj);
+                        Object OkhttpCallObj  = foriginalCall.get(onSubscribeObj);
 
-                    Class clsOkhttpCall = Class.forName("retrofit2.OkHttpCall");
-                    Field fdArgs = clsOkhttpCall.getDeclaredField("args");
-                    fdArgs.setAccessible(true);
-                    args = (Object[]) fdArgs.get(OkhttpCallObj);
+                        Class clsOkhttpCall = Class.forName("retrofit2.OkHttpCall");
+                        Field fdArgs = clsOkhttpCall.getDeclaredField("args");
+                        fdArgs.setAccessible(true);
+                        args = (Object[]) fdArgs.get(OkhttpCallObj);
 
-                    Field fdserviceMethod  = clsOkhttpCall.getDeclaredField("serviceMethod");
-                    fdserviceMethod.setAccessible(true);
+                        Field fdserviceMethod  = clsOkhttpCall.getDeclaredField("serviceMethod");
+                        fdserviceMethod.setAccessible(true);
+                        serviceMethodObj =  fdserviceMethod.get(OkhttpCallObj);
 
-                   serviceMethodObj =  fdserviceMethod.get(OkhttpCallObj);
-
-                    LogUtil.d("CacheTransformer refelect time cost: "+(System.currentTimeMillis()-startTime)+"ms");
-                    if (serviceMethodObj!=null){
-                        RetrofitCache.getInatance().addMethodInfo(serviceMethodObj,args);
+                        LogUtil.d("CacheTransformer refelect time cost: "+(System.currentTimeMillis()-startTime)+"ms");
+                        if (serviceMethodObj!=null){
+                            RetrofitCache.getInatance().addMethodInfo(serviceMethodObj,args);
+                        }
                     }
-
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LogUtil.l(e);
                 }
-
                 return tObservable;
             }
         };

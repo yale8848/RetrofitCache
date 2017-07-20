@@ -53,14 +53,14 @@ Android Retrofit Rxjava Okhttp Cache 帮助库, 此库依赖retrofit2,okhttp3，
  - 添加 jenter lib
 
  ```
- compile 'ren.yale.android:retrofitcachelib:0.2.0'
+ compile 'ren.yale.android:retrofitcachelib:0.2.1'
  ```
 
  如果你的工程已经添加retrofit2 and okhttp3库，可以去掉相应的库
 
 
  ```
- compile ('ren.yale.android:retrofitcachelib:0.2.0') {
+ compile ('ren.yale.android:retrofitcachelib:0.2.1') {
       exclude module: 'okhttp-urlconnection', group: 'com.squareup.okhttp3'
       exclude module: 'retrofit', group: 'com.squareup.retrofit2'
       exclude module: 'rxjava', group: 'io.reactivex'
@@ -172,7 +172,7 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 
 ```
 ## 版本修改记录
-
+- 0.2.1 解决compose异常处理的问题
 - 0.2.0 添加 @Mock 模拟数据api
 - 0.1.6 解决默认时间有误的问题
 - 0.1.5 添加设置默认时间的接口

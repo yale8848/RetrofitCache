@@ -13,12 +13,14 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Request;
 import ren.yale.android.retrofitcachelib.anno.Cache;
 import ren.yale.android.retrofitcachelib.anno.Mock;
+import ren.yale.android.retrofitcachelib.util.LogUtil;
 import retrofit2.Retrofit;
 
 /**
  * Created by Yale on 2017/6/13.
  */
 public class RetrofitCache {
+
 
     private static volatile RetrofitCache mRetrofit;
     private Vector<Map> mVector;
@@ -59,7 +61,7 @@ public class RetrofitCache {
         try {
             url =  buildRequestUrl(serviceMethod,args);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.l(e);
         }
         if (!TextUtils.isEmpty(url)){
             if (!mUrlAragsMap.containsKey(url)){
@@ -72,8 +74,13 @@ public class RetrofitCache {
         Class   clsServiceMethod =  Class.forName("retrofit2.ServiceMethod");
         Method toRequestMethod =  clsServiceMethod.getDeclaredMethod("toRequest", Object[].class );
         toRequestMethod.setAccessible(true);
-        Request request = (Request) toRequestMethod.invoke(serviceMethod,new Object[]{args});
-        return request.url().toString();
+        try {
+            Request request = (Request) toRequestMethod.invoke(serviceMethod,new Object[]{args});
+            return request.url().toString();
+        }catch (Exception e){
+            LogUtil.l(e);
+        }
+        return "";
     }
     public RetrofitCache setDefaultTime(long time){
         mDefaultTime = time;
@@ -110,7 +117,7 @@ public class RetrofitCache {
                         }
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LogUtil.l(e);
                 }
             }
         }
@@ -156,7 +163,7 @@ public class RetrofitCache {
                         }
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LogUtil.l(e);
                 }
             }
         }
