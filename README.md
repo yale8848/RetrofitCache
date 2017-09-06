@@ -39,10 +39,18 @@ Observable<HttpResult> test();
 Observable<HttpResult> test();
 ```
 
-- add mock data
+- add mock data ( if use value and url, url will ignore  )
+
 
 ```
-@Mock(value = "{\"data\":\"mockdata\"}")
+@Mock(value = "{\"data\":\"mockdata\"}") //mock local data
+@GET("users")
+Observable<HttpResult> test();
+```
+
+
+```
+@Mock(url = "http://url.com/test") //mock remote data
 @GET("users")
 Observable<HttpResult> test();
 ```
@@ -53,7 +61,7 @@ Observable<HttpResult> test();
  - add jenter lib
 
  ```
- compile 'ren.yale.android:retrofitcachelib:0.2.1'
+ compile 'ren.yale.android:retrofitcachelib:0.2.2'
  ```
 
  if you had use retrofit2 and okhttp3 in your project please exclude
@@ -176,7 +184,8 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 ```
 
 ## Change log
+- 0.2.2 add @Mock(url) //remote url
 - 0.2.1 fix comopse exception
-- 0.2.0 add @Mock
+- 0.2.0 add @Mock(value) //local value
 - 0.1.6 fix default time error
 - 0.1.5 add set default time api
