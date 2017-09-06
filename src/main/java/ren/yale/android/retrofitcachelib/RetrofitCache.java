@@ -97,7 +97,7 @@ public class RetrofitCache {
         return mDefaultTimeUnit;
     }
 
-    public String getMockData(String url){
+    public Mock getMockObject(String url){
         for (Map serviceMethodCache:mVector) {
 
             for (Object entry:serviceMethodCache.keySet()){
@@ -111,7 +111,7 @@ public class RetrofitCache {
                             Method m = (Method) entry;
                             Mock mock =  m.getAnnotation(Mock.class);
                             if (mock!=null){
-                                return mock.value();
+                                return  mock;
                             }
                             return null;
                         }
@@ -122,6 +122,31 @@ public class RetrofitCache {
             }
         }
 
+        return null;
+    }
+    public String getMockUrl(Mock mock){
+        if (mock!=null){
+            if (!TextUtils.isEmpty(mock.url())){
+                return mock.url();
+            }
+        }
+        return null;
+    }
+    public String getMockData(Mock mock){
+        if (mock!=null){
+            if (!TextUtils.isEmpty(mock.value())){
+                return mock.value();
+            }
+        }
+        return null;
+    }
+    public String getMockData(String url){
+        Mock mock =  getMockObject(url);
+        if (mock!=null){
+            if (!TextUtils.isEmpty(mock.value())){
+                return mock.value();
+            }
+        }
         return null;
     }
 

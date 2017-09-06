@@ -1,5 +1,7 @@
 package ren.yale.android.retrofitcachelib.intercept;
 
+import android.text.TextUtils;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -21,9 +23,16 @@ public class CacheInterceptorOnNet extends BaseInterceptor implements Intercepto
             return mockResponse;
         }
         String url = request.url().url().toString();
+
+        String mockPreUrl = request.header(KEY_HEADER_PRE_URL);
+        if (!TextUtils.isEmpty(mockPreUrl)){
+            url = mockPreUrl;
+        }
+
+        Long maxAge = RetrofitCache.getInatance().getCacheTime(url);
         Response response = chain.proceed(request);
         LogUtil.d("get data from net = "+response.code());
-        Long maxAge = RetrofitCache.getInatance().getCacheTime(url);
+
         return   response.newBuilder()
                 .removeHeader("Cache-Control")
                 .header("Cache-Control", "public,max-age="+maxAge)
