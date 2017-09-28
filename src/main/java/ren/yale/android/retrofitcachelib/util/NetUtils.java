@@ -17,6 +17,6 @@ public class NetUtils {
             NetworkInfo networkInfo = conManager.getActiveNetworkInfo();
             return networkInfo == null ? false : networkInfo.isAvailable();
         }
-        return false;
+        return true;
     }
 }

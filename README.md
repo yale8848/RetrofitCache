@@ -61,14 +61,14 @@ Observable<HttpResult> test();
  - add jenter lib
 
  ```
- compile 'ren.yale.android:retrofitcachelib:0.2.2'
+ compile 'ren.yale.android:retrofitcachelib:0.2.3'
  ```
 
  if you had use retrofit2 and okhttp3 in your project please exclude
 
 
  ```
- compile ('ren.yale.android:retrofitcachelib:0.2.1') {
+ compile ('ren.yale.android:retrofitcachelib:0.2.3') {
         exclude module: 'okhttp-urlconnection', group: 'com.squareup.okhttp3'
         exclude module: 'retrofit', group: 'com.squareup.retrofit2'
         exclude module: 'rxjava', group: 'io.reactivex'
