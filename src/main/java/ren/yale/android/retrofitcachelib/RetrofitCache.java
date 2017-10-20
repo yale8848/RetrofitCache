@@ -32,6 +32,8 @@ public class RetrofitCache {
 
     private Map mUrlAragsMap =null;
 
+    private CacheInterceptorListener mCacheInterceptorListener;
+
     private RetrofitCache(){
         clear();
         mUrlAragsMap = new HashMap();
@@ -40,6 +42,12 @@ public class RetrofitCache {
         return mContext;
     }
 
+    public void setCacheInterceptorListener(CacheInterceptorListener listener){
+        mCacheInterceptorListener = listener;
+    }
+    public CacheInterceptorListener getCacheInterceptorListener(){
+        return mCacheInterceptorListener;
+    }
 
     public static RetrofitCache getInatance(){
         if (mRetrofit == null){

@@ -132,6 +132,24 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 
 ```
 
+- setCacheInterceptorListener 设置是否每一个接口都缓存
+
+```
+        RetrofitCache.getInatance().setCacheInterceptorListener(
+                new CacheInterceptorListener() {
+            @Override
+            public boolean canCache(Request request,Response response) {
+                String res = "";
+                try {
+                    res = response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        });
+
+```
 
 - 混淆配置
 
@@ -178,6 +196,7 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 
 ```
 ## 版本修改记录
+- 0.3.1 添加 CacheInterceptorListener
 - 0.2.2 添加@Mock(url) 访问远程模拟数据
 - 0.2.1 解决compose异常处理的问题
 - 0.2.0 添加 @Mock(value) 获取本地模拟数据

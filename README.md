@@ -136,7 +136,24 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 
 ```
 
+- setCacheInterceptorListener  Set wether each api can cache
 
+```
+        RetrofitCache.getInatance().setCacheInterceptorListener(
+                new CacheInterceptorListener() {
+            @Override
+            public boolean canCache(Request request,Response response) {
+                String res = "";
+                try {
+                    res = response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        });
+
+```
 
 - proguard-rule
 
@@ -184,6 +201,7 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 ```
 
 ## Change log
+- 0.3.1 add CacheInterceptorListener
 - 0.2.2 add @Mock(url) //remote url
 - 0.2.1 fix comopse exception
 - 0.2.0 add @Mock(value) //local value
