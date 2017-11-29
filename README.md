@@ -1,5 +1,8 @@
 # RetrofitCache
 
+[![](https://img.shields.io/badge/jcenter-retrofitcache_1.0.4-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.0.4)
+[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.0.4-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.0.4)
+
 RetrofitCache让retrofit2+okhttp3+rx网络访问添加缓存如此简单。通过注解配置，可以针对每一个接口灵活配置缓存策略；同时让每一个接口方便支持数据模拟，可以代码减小侵入性，模拟数据可以从内存，Assets，url轻松获取。
 
 ## 为什么使用RetrofitCache
@@ -67,8 +70,8 @@ RetrofitCache让retrofit2+okhttp3+rx网络访问添加缓存如此简单。通�
  - 添加 jenter lib注意根据自己的库选择
 
  ```
- compile 'ren.yale.android:retrofitcachelib:1.0.1'   //retrofit2+okhttp3+rxjava1
- compile 'ren.yale.android:retrofitcachelibrx2:1.0.1'   //retrofit2+okhttp3+rxjava2
+ compile 'ren.yale.android:retrofitcachelib:1.0.4'   //retrofit2+okhttp3+rxjava1
+ compile 'ren.yale.android:retrofitcachelibrx2:1.0.4'   //retrofit2+okhttp3+rxjava2
  ```
 
  - 在Android Application里初始化
