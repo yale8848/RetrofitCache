@@ -1,7 +1,11 @@
-package ren.yale.android.retrofitcachelib;
+package com.daoxuehao.android.retrofitcachelibrx2;
 
 import android.content.Context;
 import android.text.TextUtils;
+
+import com.daoxuehao.android.retrofitcachelibrx2.anno.Cache;
+import com.daoxuehao.android.retrofitcachelibrx2.anno.Mock;
+import com.daoxuehao.android.retrofitcachelibrx2.util.LogUtil;
 
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -13,9 +17,6 @@ import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Request;
-import ren.yale.android.retrofitcachelib.anno.Cache;
-import ren.yale.android.retrofitcachelib.anno.Mock;
-import ren.yale.android.retrofitcachelib.util.LogUtil;
 import retrofit2.Retrofit;
 
 /**
@@ -27,13 +28,16 @@ public class RetrofitCache {
     private static volatile RetrofitCache mRetrofit;
     private Vector<Map> mVector;
     private Map<String,Long> mUrlMap;
+
     private Context mContext;
     private Long mDefaultTime = 0L;
     private TimeUnit mDefaultTimeUnit =TimeUnit.SECONDS;
-    private Map mUrlAragsMap =null;
-    private CacheInterceptorListener mCacheInterceptorListener;
 
+    private Map mUrlAragsMap =null;
+
+    private CacheInterceptorListener mCacheInterceptorListener;
     private boolean mMock = true;
+
 
     private RetrofitCache(){
         clear();
@@ -60,6 +64,10 @@ public class RetrofitCache {
         }
         return mRetrofit;
     }
+    public RetrofitCache init(Context context){
+        mContext = context.getApplicationContext();
+        return this;
+    }
     public RetrofitCache enableMock(boolean mock){
         mMock = mock;
         return this;
@@ -67,11 +75,6 @@ public class RetrofitCache {
     public boolean canMock(){
         return mMock;
     }
-    public RetrofitCache init(Context context){
-        mContext = context.getApplicationContext();
-        return this;
-    }
-
     public void addMethodInfo(Object serviceMethod,Object[] args){
         String url = "";
         try {
@@ -185,7 +188,6 @@ public class RetrofitCache {
         }
         return null;
     }
-
     public String getMockData(String url){
         Mock mock =  getMockObject(url);
         if (mock!=null){

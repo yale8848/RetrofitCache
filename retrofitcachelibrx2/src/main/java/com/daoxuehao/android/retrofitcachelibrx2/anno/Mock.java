@@ -1,4 +1,4 @@
-package ren.yale.android.retrofitcachelib.anno;
+package com.daoxuehao.android.retrofitcachelibrx2.anno;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

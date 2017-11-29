@@ -1,12 +1,17 @@
-package ren.yale.android.retrofitcachetest;
+package ren.yale.android.retrofitcachetest.rx2;
 
 import android.content.Context;
-import android.util.Log;
+
+import com.daoxuehao.android.retrofitcachelibrx2.transformer.CacheTransformer;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -16,37 +21,27 @@ import ren.yale.android.retrofitcachelib.CacheInterceptorListener;
 import ren.yale.android.retrofitcachelib.RetrofitCache;
 import ren.yale.android.retrofitcachelib.intercept.CacheForceInterceptorNoNet;
 import ren.yale.android.retrofitcachelib.intercept.CacheInterceptorOnNet;
-import ren.yale.android.retrofitcachelib.transformer.CacheTransformer;
+import ren.yale.android.retrofitcachetest.LogTestUtil;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Yale on 2017/6/12.
  */
-public enum OKHttpUtils {
+public enum OKHttpUtilsRx2 {
     INSTANCE;
     private Context mContext;
-    private  static  Api api;
+    private  static ApiRx2 apiRx2;
     public void init(Context context){
         mContext = context;
-        if (api==null){
-            api = configRetrofit(Api.class,"http://gank.io/api/data/");
+        if (apiRx2 ==null){
+            apiRx2 = configRetrofit(ApiRx2.class,"http://gank.io/api/data/");
         }
         RetrofitCache.getInatance().setCacheInterceptorListener(
                 new CacheInterceptorListener() {
             @Override
             public boolean canCache(Request request,Response response) {
-                String res = "";
-                try {
-                    res = response.body().string();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 return true;
             }
         });
@@ -54,7 +49,7 @@ public enum OKHttpUtils {
     }
 
     public OkHttpClient getOkHttpClient(){
-        okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
+        OkHttpClient.Builder clientBuilder=new OkHttpClient.Builder();
         clientBuilder.readTimeout(20, TimeUnit.SECONDS);
         clientBuilder.connectTimeout(20, TimeUnit.SECONDS);
         clientBuilder.writeTimeout(20, TimeUnit.SECONDS);
@@ -81,24 +76,24 @@ public enum OKHttpUtils {
                 finalString = str.substring(index, index+maxLength);
             }
             index += maxLength;
-            Log.d("retrofitcache", finalString.trim());
+            LogTestUtil.d( finalString.trim());
         }
     }
     private class LogInterceptor implements Interceptor {
 
 
-        public okhttp3.Response intercept(Chain chain) throws IOException {
+        public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
             StringBuffer sb = new StringBuffer();
 
 
-            okhttp3.Response response = chain.proceed(chain.request());
+            Response response = chain.proceed(chain.request());
             okhttp3.MediaType mediaType = response.body().contentType();
             String content = response.body().string();
 
 
             sb.append("======== request: "+request.toString()+"\r\n ======== request headers: "+request.headers().toString()+"\r\n======= response header:"+response.headers().toString()+"\r\n---------- response body:\r\n");
-            Log.d("retrofitcache",sb.toString());
+            LogTestUtil.d(sb.toString());
             try {
                 showLog(content);
             }catch (Exception e){
@@ -110,42 +105,35 @@ public enum OKHttpUtils {
                     .build();
         }
     }
-    public static <T> Observable.Transformer<T, T> IoMain() {
 
-        return new Observable.Transformer<T, T>() {
+
+    public <T> ObservableTransformer<T, T> IoMain() {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-
-                return tObservable.compose(CacheTransformer.<T>emptyTransformer())
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()).map(new Func1<T, T>() {
-                            @Override
-                            public Object call(Object t) {
-
-                                return t;
-                            }
-                        });
+            public ObservableSource<T> apply(io.reactivex.Observable<T> upstream) {
+                return upstream.compose(CacheTransformer.<T>emptyTransformer()).
+                        subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
             }
         };
     }
 
 
-    public Api getApi(){
-        return api;
+
+
+    public ApiRx2 getApi(){
+        return apiRx2;
     }
 
 
     private <T> T configRetrofit(Class<T> service,String url ) {
-        RxJavaCallAdapterFactory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(rxJavaCallAdapterFactory)
-                //.addCallAdapterFactory(new CacheFactory())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         RetrofitCache.getInatance().addRetrofit(retrofit);
-        T t =   retrofit.create(service);
-        return t;
+        return retrofit.create(service);
     }
 }

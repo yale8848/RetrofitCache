@@ -1,9 +1,9 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.yale8848'
 
 android {
     compileSdkVersion 26
-
-
 
     defaultConfig {
         minSdkVersion 14
@@ -25,7 +25,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
 
     implementation'io.reactivex.rxjava2:rxjava:2.0.7'
@@ -35,4 +34,4 @@ dependencies {
     implementation'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
 
 }
-apply from: './config/RetrofitCache.gradle'
+//apply from: './config/RetrofitCache.gradle'

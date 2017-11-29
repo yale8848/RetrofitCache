@@ -1,21 +1,23 @@
 # RetrofitCache
 
-[中文文档](https://github.com/yale8848/RetrofitCache/blob/master/README_CN.MD)
+RetrofitCache让retrofit2+okhttp3+rx网络访问添加缓存如此简单。通过注解配置，可以针对每一个接口灵活配置缓存策略；同时让每一个接口方便支持数据模拟，可以代码减小侵入性，模拟数据可以从内存，Assets，url轻松获取。
 
-Android Retrofit Rxjava Okhttp Cache util lib , this lib dependent on retrofit2,okhttp3,rx1
+## 为什么使用RetrofitCache
 
-## Usage
+- 服务端接口不严格按照http缓存策略配置，有些不会针对每一个请求单独配置缓存策略
+- 第三方缓存库不是很方便的针对每一个接口进行缓存策略配置，侵入性比较大
+- 很方便的针对每个接口添加模拟数据
 
- > the Cache Annotation only affect the cache strategy when have net connection,and only cached with @GET request
+## 调用例子
 
-- no cached
+- 不走缓存例子
 
 ```
-@GET("users")
-Observable<HttpResult> test();
+ @GET("users")
+ Observable<HttpResult> test();
 ```
 
-- 20 seconds cached
+- 缓存设置为20秒
 
  ```
  @Cache(time = 20)
@@ -23,7 +25,7 @@ Observable<HttpResult> test();
  Observable<HttpResult> test();
  ```
 
-- 20 mininuts cached
+- 缓存设置为20分钟
 
  ```
  @Cache(time = 20,timeUnit = TimeUnit.MINUTES)
@@ -31,65 +33,57 @@ Observable<HttpResult> test();
  Observable<HttpResult> test();
  ```
 
-- default time cached，default is 0s
-
-```
-@Cache()
-@GET("users")
-Observable<HttpResult> test();
-```
-
-- add mock data ( if use value and url, url will ignore  )
-
-
-```
-@Mock(value = "{\"data\":\"mockdata\"}") //mock local data
-@GET("users")
-Observable<HttpResult> test();
-```
-
-
-```
-@Mock(url = "http://url.com/test") //mock remote data
-@GET("users")
-Observable<HttpResult> test();
-```
-
-
-## How to use:
-
- - add jenter lib
+- 默认时间缓存,默认是0秒
 
  ```
- compile 'ren.yale.android:retrofitcachelib:0.2.3'
+ @Cache()
+ @GET("users")
+ Observable<HttpResult> test();
  ```
 
- if you had use retrofit2 and okhttp3 in your project please exclude
-
-
- ```
- compile ('ren.yale.android:retrofitcachelib:0.2.3') {
-        exclude module: 'okhttp-urlconnection', group: 'com.squareup.okhttp3'
-        exclude module: 'retrofit', group: 'com.squareup.retrofit2'
-        exclude module: 'rxjava', group: 'io.reactivex'
-        exclude module: 'adapter-rxjava', group: 'com.squareup.retrofit2'
- }
+- 添加模拟数据（value,assets,url同时都配置的话，就按照这个顺序处理）
 
  ```
+ @Mock(value = "{\"data\":\"mockdata\"}") //模拟内存数据
+ @GET("users")
+ Observable<HttpResult> test();
+ ```
 
- - init in android Application
+ ```
+ @Mock(assets = "mock/mock.json") //从assets获取模拟数据
+ @GET("users")
+ Observable<HttpResult> test();
+ ```
+
+ ```
+  @Mock(url = "http://url.com/test") //从新的url请求数据
+  @GET("users")
+  Observable<HttpResult> test();
+  ```
+
+
+## 使用方法:
+
+ - 添加 jenter lib注意根据自己的库选择
+
+ ```
+ compile 'ren.yale.android:retrofitcachelib:1.0.1'   //retrofit2+okhttp3+rxjava1
+ compile 'ren.yale.android:retrofitcachelibrx2:1.0.1'   //retrofit2+okhttp3+rxjava2
+ ```
+
+ - 在Android Application里初始化
 
  ```
   RetrofitCache.getInatance().init(this);
  ```
 
-also can moidify default config , default time=0，timeUnit = TimeUnit.SECONDS
+也可以修改默认配置，默认time=0，timeUnit = TimeUnit.SECONDS
 
 ```
 RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setDefaultTime(1);
 ```
 
- - config okhttp cache dir when init OkHttpClient
+ - cOkHttpClient初始化时配置缓存目录
 
  ```
   okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
@@ -102,7 +96,7 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 
  ```
 
-- add okhttp cache Interceptor
+- 给okhttp添加拦截器
 
  ```
   okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
@@ -113,10 +107,10 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 
  ```
 
- > if add CacheForceInterceptorNoNet make force cache when not have net connection ,if only add CacheInterceptorOnNet,
- the same cache strategy no matter have net connnetion
+ > 添加CacheForceInterceptorNoNet作用是在无网时强制走缓存,如果只添加了CacheInterceptorOnNet,那么在有网和无网的缓存策略就会一样
 
-- add retrofit
+
+- 添加retrofit对象
 
 ```
  Retrofit retrofit = new Retrofit.Builder()
@@ -125,18 +119,20 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-
- ** RetrofitCache.getInatance().addRetrofit(retrofit); **
-
+ ** RetrofitCache.getInatance().addRetrofit(retrofit);**
 ```
-- add rx Observable compose
+-  **添加 rx Observable compose**
 
 ```
  api.test().compose(CacheTransformer.emptyTransformer())...
 
 ```
 
-- setCacheInterceptorListener  Set wether each api can cache
+
+## 进阶
+
+
+- setCacheInterceptorListener 设置是否每一个接口都缓存
 
 ```
         RetrofitCache.getInatance().setCacheInterceptorListener(
@@ -155,7 +151,15 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 
 ```
 
-- proguard-rule
+
+- 设置是否走模拟数据,比如说在正式接口好了后可以如下设置，让模拟数据失效
+
+```
+ RetrofitCache.getInatance().enableMock(false);
+```
+
+
+## 混淆配置
 
 ```
 -keepattributes *Annotation*,InnerClasses
@@ -199,11 +203,3 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 }
 
 ```
-
-## Change log
-- 0.3.1 add CacheInterceptorListener
-- 0.2.2 add @Mock(url) //remote url
-- 0.2.1 fix comopse exception
-- 0.2.0 add @Mock(value) //local value
-- 0.1.6 fix default time error
-- 0.1.5 add set default time api

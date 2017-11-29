@@ -1,13 +1,14 @@
-package ren.yale.android.retrofitcachelib.intercept;
+package com.daoxuehao.android.retrofitcachelibrx2.intercept;
+
+import com.daoxuehao.android.retrofitcachelibrx2.RetrofitCache;
+import com.daoxuehao.android.retrofitcachelibrx2.anno.Mock;
+import com.daoxuehao.android.retrofitcachelibrx2.util.LogUtil;
 
 import okhttp3.Interceptor;
 import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import ren.yale.android.retrofitcachelib.RetrofitCache;
-import ren.yale.android.retrofitcachelib.anno.Mock;
-import ren.yale.android.retrofitcachelib.util.LogUtil;
 
 /**
  * Created by Yale on 2017/7/5.
@@ -18,11 +19,9 @@ public class BaseInterceptor {
     protected  static final String KEY_HEADER_PRE_URL = "retrofictcache_mock-pre-url";
 
     protected  String mockUrl(Interceptor.Chain chain){
-
         if (!RetrofitCache.getInatance().canMock()){
             return null;
         }
-
         Request request = chain.request();
         String url = request.url().url().toString();
         Mock mock = RetrofitCache.getInatance().getMockObject(url);
@@ -30,11 +29,9 @@ public class BaseInterceptor {
     }
 
     protected Response mockResponse(Interceptor.Chain chain){
-
         if (!RetrofitCache.getInatance().canMock()){
             return null;
         }
-
         Request request = chain.request();
         try{
             String url = request.url().url().toString();
