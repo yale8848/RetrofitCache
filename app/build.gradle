@@ -26,14 +26,14 @@ android {
 
 dependencies {
 
-    implementation project(':retrofitcachelibRX1')
-    implementation 'io.reactivex:rxjava:1.2.4'
+    implementation project(':retrofitcachelib')
     implementation 'io.reactivex:rxandroid:1.2.1'
-    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
     implementation 'com.squareup.okio:okio:1.11.0'
+
+
+
     implementation 'com.alibaba:fastjson:1.1.55.android'
     implementation 'com.android.support:appcompat-v7:26.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
