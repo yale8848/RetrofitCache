@@ -207,6 +207,14 @@ RetrofitCache.getInatance().enableMock(false);
 
 ```
 
+## 欢迎提问讨论
+
+[讨论区](https://github.com/yale8848/RetrofitCache/issues)
+
+## 贡献代码
+
+[贡献代码](CONTRIBUTING.md)
+
 ## 开源协议
 
 ```
