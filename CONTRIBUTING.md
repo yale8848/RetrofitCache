@@ -1,0 +1,4 @@
+- fork https://github.com/yale8848/RetrofitCache.git
+- git checkout **`dev`**
+- commit & push
+- pull request
