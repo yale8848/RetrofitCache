@@ -65,9 +65,11 @@ Observable<HttpResult> test();
   ```
 
 
+> 缓存只对http Get请求有效；如果要问为什么，可以问问后台开发同学
+
 ## 使用方法:
 
- - 添加 jenter lib注意根据自己的库选择
+ - 添加 jcenter lib,注意根据自己的库选择
 
  ```
 compile 'ren.yale.android:retrofitcachelib:1.0.4'   //retrofit2+okhttp3+rxjava1
@@ -86,7 +88,7 @@ RetrofitCache.getInatance().init(this);
 RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setDefaultTime(1);
 ```
 
- - cOkHttpClient初始化时配置缓存目录
+ - OkHttpClient初始化时配置缓存目录
 
  ```
 okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
