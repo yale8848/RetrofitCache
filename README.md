@@ -16,52 +16,52 @@ RetrofitCache让retrofit2+okhttp3+rx网络访问添加缓存如此简单。通�
 - 不走缓存例子
 
 ```
- @GET("users")
- Observable<HttpResult> test();
+@GET("users")
+Observable<HttpResult> test();
 ```
 
 - 缓存设置为20秒
 
  ```
- @Cache(time = 20)
- @GET("users")
- Observable<HttpResult> test();
+@Cache(time = 20)
+@GET("users")
+Observable<HttpResult> test();
  ```
 
 - 缓存设置为20分钟
 
  ```
- @Cache(time = 20,timeUnit = TimeUnit.MINUTES)
- @GET("users")
- Observable<HttpResult> test();
+@Cache(time = 20,timeUnit = TimeUnit.MINUTES)
+@GET("users")
+Observable<HttpResult> test();
  ```
 
 - 默认时间缓存,默认是0秒
 
  ```
- @Cache()
- @GET("users")
- Observable<HttpResult> test();
+@Cache()
+@GET("users")
+Observable<HttpResult> test();
  ```
 
 - 添加模拟数据（value,assets,url同时都配置的话，就按照这个顺序处理）
 
  ```
- @Mock(value = "{\"data\":\"mockdata\"}") //模拟内存数据
- @GET("users")
- Observable<HttpResult> test();
+@Mock(value = "{\"data\":\"mockdata\"}") //模拟内存数据
+@GET("users")
+Observable<HttpResult> test();
  ```
 
  ```
- @Mock(assets = "mock/mock.json") //从assets获取模拟数据
- @GET("users")
- Observable<HttpResult> test();
+@Mock(assets = "mock/mock.json") //从assets获取模拟数据
+@GET("users")
+Observable<HttpResult> test();
  ```
 
  ```
-  @Mock(url = "http://url.com/test") //从新的url请求数据
-  @GET("users")
-  Observable<HttpResult> test();
+@Mock(url = "http://url.com/test") //从新的url请求数据
+@GET("users")
+Observable<HttpResult> test();
   ```
 
 
@@ -70,14 +70,14 @@ RetrofitCache让retrofit2+okhttp3+rx网络访问添加缓存如此简单。通�
  - 添加 jenter lib注意根据自己的库选择
 
  ```
- compile 'ren.yale.android:retrofitcachelib:1.0.4'   //retrofit2+okhttp3+rxjava1
- compile 'ren.yale.android:retrofitcachelibrx2:1.0.4'   //retrofit2+okhttp3+rxjava2
+compile 'ren.yale.android:retrofitcachelib:1.0.4'   //retrofit2+okhttp3+rxjava1
+compile 'ren.yale.android:retrofitcachelibrx2:1.0.4'   //retrofit2+okhttp3+rxjava2
  ```
 
  - 在Android Application里初始化
 
  ```
-  RetrofitCache.getInatance().init(this);
+RetrofitCache.getInatance().init(this);
  ```
 
 也可以修改默认配置，默认time=0，timeUnit = TimeUnit.SECONDS
@@ -89,24 +89,24 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
  - cOkHttpClient初始化时配置缓存目录
 
  ```
-  okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
-  ...
-  int cacheSize = 200 * 1024 * 1024;
-  File cacheDirectory = new File(mContext.getCacheDir(), "httpcache");
-  Cache cache = new Cache(cacheDirectory, cacheSize);
-  OkHttpClient client =  clientBuilder.cache(cache).build();
-  ...
+okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
+...
+int cacheSize = 200 * 1024 * 1024;
+File cacheDirectory = new File(mContext.getCacheDir(), "httpcache");
+Cache cache = new Cache(cacheDirectory, cacheSize);
+OkHttpClient client =  clientBuilder.cache(cache).build();
+...
 
  ```
 
 - 给okhttp添加拦截器
 
  ```
-  okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
-  ...
- clientBuilder.addInterceptor(new CacheForceInterceptorNoNet());
- clientBuilder.addNetworkInterceptor(new CacheInterceptorOnNet());
-  ...
+okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
+...
+clientBuilder.addInterceptor(new CacheForceInterceptorNoNet());
+clientBuilder.addNetworkInterceptor(new CacheInterceptorOnNet());
+...
 
  ```
 
@@ -116,18 +116,18 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 - 添加retrofit对象
 
 ```
- Retrofit retrofit = new Retrofit.Builder()
+Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
- ** RetrofitCache.getInatance().addRetrofit(retrofit);**
+RetrofitCache.getInatance().addRetrofit(retrofit);
 ```
 -  **添加 rx Observable compose**
 
 ```
- api.test().compose(CacheTransformer.emptyTransformer())...
+api.test().compose(CacheTransformer.emptyTransformer())...
 
 ```
 
@@ -138,7 +138,7 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 - setCacheInterceptorListener 设置是否每一个接口都缓存
 
 ```
-        RetrofitCache.getInatance().setCacheInterceptorListener(
+RetrofitCache.getInatance().setCacheInterceptorListener(
                 new CacheInterceptorListener() {
             @Override
             public boolean canCache(Request request,Response response) {
@@ -150,7 +150,7 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
                 }
                 return true;
             }
-        });
+});
 
 ```
 
@@ -158,7 +158,7 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
 - 设置是否走模拟数据,比如说在正式接口好了后可以如下设置，让模拟数据失效
 
 ```
- RetrofitCache.getInatance().enableMock(false);
+RetrofitCache.getInatance().enableMock(false);
 ```
 
 
@@ -205,4 +205,30 @@ RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setD
  rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 
+```
+
+## 开源协议
+
+```
+MIT License
+
+Copyright (c) 2017 Yale
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ```
