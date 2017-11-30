@@ -1,28 +1,26 @@
 # RetrofitCache
 
-[English](README_EN.md)
-
 [![](https://img.shields.io/badge/jcenter-retrofitcache_1.0.4-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.0.4)
 [![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.0.4-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.0.4)
 
-RetrofitCache让retrofit2+okhttp3+rxjav配置缓存如此简单。通过注解配置，可以针对每一个接口灵活配置缓存策略；同时让每一个接口方便支持数据模拟，可以代码减小侵入性，模拟数据可以从内存，Assets，url轻松获取。
+RetrofitCache let retrofit2,okhttp3,rx add cache so easy. You can config cache strategy with each api by annotation.Also you can config mock data with each api easily.
 
-## 为什么使用RetrofitCache
+## Why use?
 
-- 服务端接口不严格按照http缓存策略配置，有些不会针对每一个请求单独配置缓存策略
-- 第三方缓存库不是很方便的针对每一个接口进行缓存策略配置，侵入性比较大
-- 很方便的针对每个接口添加模拟数据
+- Api server do not config http cache strategy
+- Third part lib config cache strategy not easy
+- Add mock data to each api very easily
 
-## 调用例子
+## Demo
 
-- 不走缓存例子
+- Not have cache
 
 ```
 @GET("users")
 Observable<HttpResult> test();
 ```
 
-- 缓存设置为20秒
+- Cache time 20 seconds
 
  ```
 @Cache(time = 20)
@@ -30,7 +28,7 @@ Observable<HttpResult> test();
 Observable<HttpResult> test();
  ```
 
-- 缓存设置为20分钟
+- Cache time 20 minutes
 
  ```
 @Cache(time = 20,timeUnit = TimeUnit.MINUTES)
@@ -38,7 +36,7 @@ Observable<HttpResult> test();
 Observable<HttpResult> test();
  ```
 
-- 默认时间缓存,默认是0秒
+- Default cache time 0 seconds
 
  ```
 @Cache()
@@ -46,51 +44,51 @@ Observable<HttpResult> test();
 Observable<HttpResult> test();
  ```
 
-- 添加模拟数据（value,assets,url同时都配置的话，就按照这个顺序处理）
+- Add mock data(if use value,assets,url same time, it will deal by this sort )
 
  ```
-@Mock(value = "{\"data\":\"mockdata\"}") //模拟内存数据
+@Mock(value = "{\"data\":\"mockdata\"}") //mock ram data
 @GET("users")
 Observable<HttpResult> test();
  ```
 
  ```
-@Mock(assets = "mock/mock.json") //从assets获取模拟数据
+@Mock(assets = "mock/mock.json") //mock data from assets
 @GET("users")
 Observable<HttpResult> test();
  ```
 
  ```
-@Mock(url = "http://url.com/test") //从新的url请求数据
+@Mock(url = "http://url.com/test") //mock data from new url
 @GET("users")
 Observable<HttpResult> test();
   ```
 
 
-> 缓存只对http Get请求有效；如果要问为什么，可以问问后台开发同学
+> Cache just with http Get method
 
-## 使用方法:
+## How to use
 
- - 添加 jcenter lib,注意根据自己的库选择
+ - Add jcenter lib,notice chose different with you project
 
  ```
 compile 'ren.yale.android:retrofitcachelib:1.0.4'   //retrofit2+okhttp3+rxjava1
 compile 'ren.yale.android:retrofitcachelibrx2:1.0.4'   //retrofit2+okhttp3+rxjava2
  ```
 
- - 在Android Application里初始化
+ - Init in Android Application
 
  ```
 RetrofitCache.getInatance().init(this);
  ```
 
-也可以修改默认配置，默认time=0，timeUnit = TimeUnit.SECONDS
+Also can modify default config, default value time=0,timeUnit = TimeUnit.SECONDS
 
 ```
 RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setDefaultTime(1);
 ```
 
- - OkHttpClient初始化时配置缓存目录
+ - OkHttpClient config cache dir
 
  ```
 okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
@@ -103,7 +101,7 @@ OkHttpClient client =  clientBuilder.cache(cache).build();
 
  ```
 
-- 给okhttp添加拦截器
+- okhttp add Interceptor
 
  ```
 okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
@@ -114,10 +112,8 @@ clientBuilder.addNetworkInterceptor(new CacheInterceptorOnNet());
 
  ```
 
- > 添加CacheForceInterceptorNoNet作用是在无网时强制走缓存,如果只添加了CacheInterceptorOnNet,那么在有网和无网的缓存策略就会一样
 
-
-- 添加retrofit对象
+- Add retrofit object
 
 ```
 Retrofit retrofit = new Retrofit.Builder()
@@ -128,7 +124,7 @@ Retrofit retrofit = new Retrofit.Builder()
                 .build();
 RetrofitCache.getInatance().addRetrofit(retrofit);
 ```
--  **添加 rx Observable compose**
+-  **Add rx Observable compose**
 
 ```
 api.test().compose(CacheTransformer.emptyTransformer())...
@@ -136,10 +132,10 @@ api.test().compose(CacheTransformer.emptyTransformer())...
 ```
 
 
-## 进阶
+## Further
 
 
-- setCacheInterceptorListener 设置是否每一个接口都缓存
+- setCacheInterceptorListener to set whether can cache by each api
 
 ```
 RetrofitCache.getInatance().setCacheInterceptorListener(
@@ -159,14 +155,14 @@ RetrofitCache.getInatance().setCacheInterceptorListener(
 ```
 
 
-- 设置是否走模拟数据,比如说在正式接口好了后可以如下设置，让模拟数据失效
+- Enable mock data , if your release api ok,you can set false
 
 ```
 RetrofitCache.getInatance().enableMock(false);
 ```
 
 
-## 混淆配置
+## Proguard
 
 ```
 -keepattributes *Annotation*,InnerClasses
@@ -211,15 +207,15 @@ RetrofitCache.getInatance().enableMock(false);
 
 ```
 
-## 欢迎提问讨论
+## Issues
 
-[讨论区](https://github.com/yale8848/RetrofitCache/issues)
+[Issues](https://github.com/yale8848/RetrofitCache/issues)
 
-## 贡献代码
+## How CONTRIBUTING
 
-[贡献代码](CONTRIBUTING.md)
+[CONTRIBUTING](CONTRIBUTING.md)
 
-## 开源协议
+## License
 
 ```
 MIT License
