@@ -50,7 +50,7 @@ public class RetrofitCache {
         return mCacheInterceptorListener;
     }
 
-    public static RetrofitCache getInatance(){
+    public static RetrofitCache getInstance(){
         if (mRetrofit == null){
             synchronized (RetrofitCache.class){
                 if (mRetrofit == null){

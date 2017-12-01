@@ -79,13 +79,13 @@ compile 'ren.yale.android:retrofitcachelibrx2:1.0.4'   //retrofit2+okhttp3+rxjav
  - Init in Android Application
 
  ```
-RetrofitCache.getInatance().init(this);
+RetrofitCache.getInstance().init(this);
  ```
 
 Also can modify default config, default value time=0,timeUnit = TimeUnit.SECONDS
 
 ```
-RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setDefaultTime(1);
+RetrofitCache.getInstance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setDefaultTime(1);
 ```
 
  - OkHttpClient config cache dir
@@ -122,7 +122,7 @@ Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-RetrofitCache.getInatance().addRetrofit(retrofit);
+RetrofitCache.getInstance().addRetrofit(retrofit);
 ```
 -  **Add rx Observable compose**
 
@@ -138,7 +138,7 @@ api.test().compose(CacheTransformer.emptyTransformer())...
 - setCacheInterceptorListener to set whether can cache by each api
 
 ```
-RetrofitCache.getInatance().setCacheInterceptorListener(
+RetrofitCache.getInstance().setCacheInterceptorListener(
                 new CacheInterceptorListener() {
             @Override
             public boolean canCache(Request request,Response response) {
@@ -158,7 +158,7 @@ RetrofitCache.getInatance().setCacheInterceptorListener(
 - Enable mock data , if your release api ok,you can set false
 
 ```
-RetrofitCache.getInatance().enableMock(false);
+RetrofitCache.getInstance().enableMock(false);
 ```
 
 
