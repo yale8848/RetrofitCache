@@ -19,24 +19,24 @@ public class BaseInterceptor {
     protected  static final String KEY_HEADER_PRE_URL = "retrofictcache_mock-pre-url";
 
     protected  String mockUrl(Interceptor.Chain chain){
-        if (!RetrofitCache.getInatance().canMock()){
+        if (!RetrofitCache.getInstance().canMock()){
             return null;
         }
         Request request = chain.request();
         String url = request.url().url().toString();
-        Mock mock = RetrofitCache.getInatance().getMockObject(url);
-        return  RetrofitCache.getInatance().getMockUrl(mock);
+        Mock mock = RetrofitCache.getInstance().getMockObject(url);
+        return  RetrofitCache.getInstance().getMockUrl(mock);
     }
 
     protected Response mockResponse(Interceptor.Chain chain){
-        if (!RetrofitCache.getInatance().canMock()){
+        if (!RetrofitCache.getInstance().canMock()){
             return null;
         }
         Request request = chain.request();
         try{
             String url = request.url().url().toString();
-            Mock mock = RetrofitCache.getInatance().getMockObject(url);
-            String mockData = RetrofitCache.getInatance().getMockData(mock);
+            Mock mock = RetrofitCache.getInstance().getMockObject(url);
+            String mockData = RetrofitCache.getInstance().getMockData(mock);
             if (mockData != null){
                 LogUtil.d("get data from mock");
                 Response response = new Response.Builder().protocol(Protocol.HTTP_1_0)
@@ -45,9 +45,9 @@ public class BaseInterceptor {
                 return response;
             }
 
-            String mockAssets = RetrofitCache.getInatance().getMockAssets(mock);
+            String mockAssets = RetrofitCache.getInstance().getMockAssets(mock);
             if (mockAssets!=null){
-                String md = RetrofitCache.getInatance().getMockAssetsValue(mockAssets);
+                String md = RetrofitCache.getInstance().getMockAssetsValue(mockAssets);
                 if (md!=null){
                     LogUtil.d("get data from asset: "+mockAssets);
                     Response response = new Response.Builder().protocol(Protocol.HTTP_1_0)

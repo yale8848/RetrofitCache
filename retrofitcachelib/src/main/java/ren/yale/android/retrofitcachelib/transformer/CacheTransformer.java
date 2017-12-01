@@ -54,7 +54,7 @@ public class CacheTransformer {
 
                         LogUtil.d("CacheTransformer refelect time cost: "+(System.currentTimeMillis()-startTime)+"ms");
                         if (serviceMethodObj!=null){
-                            RetrofitCache.getInatance().addMethodInfo(serviceMethodObj,args);
+                            RetrofitCache.getInstance().addMethodInfo(serviceMethodObj,args);
                         }
                     }
                 } catch (Exception e) {

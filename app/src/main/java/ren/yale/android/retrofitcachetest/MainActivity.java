@@ -25,13 +25,13 @@ public class MainActivity extends Activity {
 
         OKHttpUtilsRx1.INSTANCE.init(this.getApplication());
         OKHttpUtilsRx2.INSTANCE.init(this.getApplication());
-        RetrofitCache.getInatance().init(this).enableMock(false);
+        RetrofitCache.getInstance().init(this).enableMock(false);
         setContentView(R.layout.activity_main);
         mTextView = (TextView) findViewById(R.id.tv_content);
     }
 
     private void testRx1(){
-        OKHttpUtilsRx1.INSTANCE.getApi().getGankAndroid()
+        OKHttpUtilsRx1.INSTANCE.getApi().getGankAndroid("bb")
                 .compose(OKHttpUtilsRx1.<GankAndroid>IoMain())
                 .subscribe(new Subscriber<GankAndroid>() {
                     @Override

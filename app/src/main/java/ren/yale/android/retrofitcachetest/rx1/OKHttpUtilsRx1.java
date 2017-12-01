@@ -37,7 +37,7 @@ public enum OKHttpUtilsRx1 {
         if (apiRx1 ==null){
             apiRx1 = configRetrofit(ApiRx1.class,"http://gank.io/api/data/");
         }
-        RetrofitCache.getInatance().setCacheInterceptorListener(
+        RetrofitCache.getInstance().setCacheInterceptorListener(
                 new CacheInterceptorListener() {
             @Override
             public boolean canCache(Request request,Response response) {
@@ -136,7 +136,7 @@ public enum OKHttpUtilsRx1 {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-        RetrofitCache.getInatance().addRetrofit(retrofit);
+        RetrofitCache.getInstance().addRetrofit(retrofit);
         return retrofit.create(service);
     }
 }
