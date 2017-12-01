@@ -67,7 +67,7 @@ public class CacheTransformer {
             Object serviceMethodObj =  fdserviceMethod.get(OkhttpCallObj);
 
             if (serviceMethodObj!=null){
-                RetrofitCache.getInatance().addMethodInfo(serviceMethodObj,args);
+                RetrofitCache.getInstance().addMethodInfo(serviceMethodObj,args);
             }
         } catch (Exception e) {
             e.printStackTrace();

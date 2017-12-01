@@ -24,7 +24,7 @@ public class CacheForceInterceptorNoNet extends BaseInterceptor implements Inter
         if (mockResponse!=null){
             return mockResponse;
         }
-       if (!NetUtils.isConnectNet(RetrofitCache.getInatance().getContext())){
+       if (!NetUtils.isConnectNet(RetrofitCache.getInstance().getContext())){
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
