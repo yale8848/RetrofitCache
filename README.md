@@ -81,13 +81,13 @@ compile 'ren.yale.android:retrofitcachelibrx2:1.0.4'   //retrofit2+okhttp3+rxjav
  - 在Android Application里初始化
 
  ```
-RetrofitCache.getInatance().init(this);
+RetrofitCache.getInstance().init(this);
  ```
 
 也可以修改默认配置，默认time=0，timeUnit = TimeUnit.SECONDS
 
 ```
-RetrofitCache.getInatance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setDefaultTime(1);
+RetrofitCache.getInstance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setDefaultTime(1);
 ```
 
  - OkHttpClient初始化时配置缓存目录
@@ -142,7 +142,7 @@ api.test().compose(CacheTransformer.emptyTransformer())...
 - setCacheInterceptorListener 设置是否每一个接口都缓存
 
 ```
-RetrofitCache.getInatance().setCacheInterceptorListener(
+RetrofitCache.getInstance().setCacheInterceptorListener(
                 new CacheInterceptorListener() {
             @Override
             public boolean canCache(Request request,Response response) {
@@ -162,7 +162,7 @@ RetrofitCache.getInatance().setCacheInterceptorListener(
 - 设置是否走模拟数据,比如说在正式接口好了后可以如下设置，让模拟数据失效
 
 ```
-RetrofitCache.getInatance().enableMock(false);
+RetrofitCache.getInstance().enableMock(false);
 ```
 
 
