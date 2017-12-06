@@ -2,10 +2,10 @@
 
 [English](README_EN.md)
 
-[![](https://img.shields.io/badge/jcenter-retrofitcache_1.0.4-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.0.4)
-[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.0.4-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.0.4)
+[![](https://img.shields.io/badge/jcenter-retrofitcache_1.0.5-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.0.4)
+[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.0.5-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.0.4)
 
-RetrofitCache让retrofit2+okhttp3+rxjav配置缓存如此简单。通过注解配置，可以针对每一个接口灵活配置缓存策略；同时让每一个接口方便支持数据模拟，可以代码减小侵入性，模拟数据可以从内存，Assets，url轻松获取。
+RetrofitCache让retrofit2+okhttp3+rxjava 配置缓存如此简单。通过注解配置，可以针对每一个接口灵活配置缓存策略；同时让每一个接口方便支持数据模拟，可以代码减小侵入性，模拟数据可以从内存，Assets，url轻松获取。
 
 ## 为什么使用RetrofitCache
 
@@ -74,8 +74,8 @@ Observable<HttpResult> test();
  - 添加 jcenter lib,注意根据自己的库选择
 
  ```
-compile 'ren.yale.android:retrofitcachelib:1.0.4'   //retrofit2+okhttp3+rxjava1
-compile 'ren.yale.android:retrofitcachelibrx2:1.0.4'   //retrofit2+okhttp3+rxjava2
+compile 'ren.yale.android:retrofitcachelib:1.0.5'   //retrofit2+okhttp3+rxjava1
+compile 'ren.yale.android:retrofitcachelibrx2:1.0.5'   //retrofit2+okhttp3+rxjava2
  ```
 
  - 在Android Application里初始化
@@ -166,51 +166,38 @@ RetrofitCache.getInstance().enableMock(false);
 ```
 
 
-## 混淆配置
+## 混淆配置（retrofit2+okhttp3+rxjava1）
 
 ```
--keepattributes *Annotation*,InnerClasses
-
 -dontwarn ren.yale.android.retrofitcachelib.**
 -keep class ren.yale.android.retrofitcachelib.** { *; }
+-keepclasseswithmembernames class rx.Observable { *; }
+-keepclasseswithmembernames class rx.internal.operators.OnSubscribeLift { *; }
+-keepclasseswithmembernames class retrofit2.adapter.rxjava.RxJavaCallAdapterFactory { *; }
+-keepclasseswithmembernames class retrofit2.adapter.rxjava.RxJavaCallAdapterFactory$CallOnSubscribe { *; }
+-keepclasseswithmembernames class retrofit2.Retrofit { *; }
+-keepclasseswithmembernames class retrofit2.ServiceMethod { *; }
+-keepclasseswithmembernames class retrofit2.OkHttpCall { *; }
 
-#retrofit2
--dontwarn retrofit2.**
--keep class retrofit2.** { *; }
--keepattributes Signature
--keepattributes Exceptions
-
--dontwarn org.robovm.**
--keep class org.robovm.** { *; }
-
-#okhttp3
--dontwarn com.squareup.okhttp3.**
--keep class com.squareup.okhttp3.** { *;}
--keep class okhttp3.** { *;}
--keep class okio.** { *;}
--dontwarn sun.security.**
--keep class sun.security.** { *;}
--dontwarn okio.**
--dontwarn okhttp3.**
-
-#rxjava
--dontwarn rx.**
--keep class rx.** { *; }
-
--dontwarn sun.misc.**
--keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
- long producerIndex;
- long consumerIndex;
-}
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
- rx.internal.util.atomic.LinkedQueueNode producerNode;
-}
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
- rx.internal.util.atomic.LinkedQueueNode consumerNode;
-}
+#retrofit2,okhttp3,rxjava1等其它混淆配置请自行添加
 
 ```
+## 混淆配置（retrofit2+okhttp3+rxjava2）
 
+```
+-dontwarn com.daoxuehao.android.retrofitcachelibrx2.**
+-keep class com.daoxuehao.android.retrofitcachelibrx2.** { *; }
+-keepclasseswithmembernames class  retrofit2.adapter.rxjava2.BodyObservable { *; }
+-keepclasseswithmembernames class  retrofit2.adapter.rxjava2.ResultObservable { *; }
+-keepclasseswithmembernames class  retrofit2.adapter.rxjava2.CallEnqueueObservable { *; }
+-keepclasseswithmembernames class  retrofit2.adapter.rxjava2.CallExecuteObservable { *; }
+-keepclasseswithmembernames class retrofit2.Retrofit { *; }
+-keepclasseswithmembernames class retrofit2.ServiceMethod { *; }
+-keepclasseswithmembernames class retrofit2.OkHttpCall { *; }
+
+#retrofit2,okhttp3,rxjava2等其它混淆配置请自行添加
+
+```
 ## 欢迎提问讨论
 
 [讨论区](https://github.com/yale8848/RetrofitCache/issues)

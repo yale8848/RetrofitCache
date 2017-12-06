@@ -2,7 +2,7 @@ package ren.yale.android.retrofitcachetest.rx2;
 
 import android.content.Context;
 
-import com.daoxuehao.android.retrofitcachelibrx2.transformer.CacheTransformer;
+import ren.yale.android.retrofitcachelibrx2.transformer.CacheTransformer;
 
 import java.io.File;
 import java.io.IOException;

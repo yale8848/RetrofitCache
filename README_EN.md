@@ -1,9 +1,9 @@
 # RetrofitCache
 
-[![](https://img.shields.io/badge/jcenter-retrofitcache_1.0.4-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.0.4)
-[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.0.4-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.0.4)
+[![](https://img.shields.io/badge/jcenter-retrofitcache_1.0.5-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.0.4)
+[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.0.5-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.0.4)
 
-RetrofitCache let retrofit2,okhttp3,rx add cache so easy. You can config cache strategy with each api by annotation.Also you can config mock data with each api easily.
+RetrofitCache let retrofit2,okhttp3,rxjava add cache so easy. You can config cache strategy with each api by annotation.Also you can config mock data with each api easily.
 
 ## Why use?
 
@@ -72,8 +72,8 @@ Observable<HttpResult> test();
  - Add jcenter lib,notice chose different with you project
 
  ```
-compile 'ren.yale.android:retrofitcachelib:1.0.4'   //retrofit2+okhttp3+rxjava1
-compile 'ren.yale.android:retrofitcachelibrx2:1.0.4'   //retrofit2+okhttp3+rxjava2
+compile 'ren.yale.android:retrofitcachelib:1.0.5'   //retrofit2+okhttp3+rxjava1
+compile 'ren.yale.android:retrofitcachelibrx2:1.0.5'   //retrofit2+okhttp3+rxjava2
  ```
 
  - Init in Android Application
@@ -206,6 +206,41 @@ RetrofitCache.getInstance().enableMock(false);
 }
 
 ```
+
+
+## Proguard(retrofit2+okhttp3+rxjava1)
+
+```
+-dontwarn ren.yale.android.retrofitcachelib.**
+-keep class ren.yale.android.retrofitcachelib.** { *; }
+-keepclasseswithmembernames class rx.Observable { *; }
+-keepclasseswithmembernames class rx.internal.operators.OnSubscribeLift { *; }
+-keepclasseswithmembernames class retrofit2.adapter.rxjava.RxJavaCallAdapterFactory { *; }
+-keepclasseswithmembernames class retrofit2.adapter.rxjava.RxJavaCallAdapterFactory$CallOnSubscribe { *; }
+-keepclasseswithmembernames class retrofit2.Retrofit { *; }
+-keepclasseswithmembernames class retrofit2.ServiceMethod { *; }
+-keepclasseswithmembernames class retrofit2.OkHttpCall { *; }
+
+#retrofit2,okhttp3,rxjava1 and other Proguard config add by yourself
+
+```
+## Proguard(retrofit2+okhttp3+rxjava2)
+
+```
+-dontwarn com.daoxuehao.android.retrofitcachelibrx2.**
+-keep class com.daoxuehao.android.retrofitcachelibrx2.** { *; }
+-keepclasseswithmembernames class  retrofit2.adapter.rxjava2.BodyObservable { *; }
+-keepclasseswithmembernames class  retrofit2.adapter.rxjava2.ResultObservable { *; }
+-keepclasseswithmembernames class  retrofit2.adapter.rxjava2.CallEnqueueObservable { *; }
+-keepclasseswithmembernames class  retrofit2.adapter.rxjava2.CallExecuteObservable { *; }
+-keepclasseswithmembernames class retrofit2.Retrofit { *; }
+-keepclasseswithmembernames class retrofit2.ServiceMethod { *; }
+-keepclasseswithmembernames class retrofit2.OkHttpCall { *; }
+
+#retrofit2,okhttp3,rxjava2 and other Proguard config add by yourself
+
+```
+
 
 ## Issues
 

@@ -1,4 +1,4 @@
-package com.daoxuehao.android.retrofitcachelibrx2.util;
+package ren.yale.android.retrofitcachelibrx2.util;
 
 /**
  * Created by Yale on 2017/6/13.

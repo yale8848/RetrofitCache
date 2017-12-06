@@ -91,10 +91,10 @@ public enum OKHttpUtilsRx1 {
             String content = response.body().string();
 
 
-            sb.append("======== request: "+request.toString()+"\r\n ======== request headers: "+request.headers().toString()+"\r\n======= response header:"+response.headers().toString()+"\r\n---------- response body:\r\n");
+           // sb.append("======== request: "+request.toString()+"\r\n ======== request headers: "+request.headers().toString()+"\r\n======= response header:"+response.headers().toString()+"\r\n---------- response body:\r\n");
             LogTestUtil.d(sb.toString());
             try {
-                showLog(content);
+               // showLog(content);
             }catch (Exception e){
                 e.printStackTrace();
             }

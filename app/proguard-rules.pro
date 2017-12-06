@@ -1,21 +1,44 @@
 
 -dontwarn ren.yale.android.retrofitcachelib.**
 -keep class ren.yale.android.retrofitcachelib.** { *; }
+-keepclasseswithmembernames class rx.Observable { *; }
+-keepclasseswithmembernames class rx.internal.operators.OnSubscribeLift { *; }
+-keepclasseswithmembernames class retrofit2.adapter.rxjava.RxJavaCallAdapterFactory { *; }
+-keepclasseswithmembernames class retrofit2.adapter.rxjava.RxJavaCallAdapterFactory$CallOnSubscribe { *; }
+
+-keepclasseswithmembernames class retrofit2.Retrofit { *; }
+-keepclasseswithmembernames class retrofit2.ServiceMethod { *; }
+-keepclasseswithmembernames class retrofit2.OkHttpCall { *; }
+
+
+-dontwarn com.daoxuehao.android.retrofitcachelibrx2.**
+-keep class com.daoxuehao.android.retrofitcachelibrx2.** { *; }
+-keepclasseswithmembernames class  retrofit2.adapter.rxjava2.BodyObservable { *; }
+-keepclasseswithmembernames class  retrofit2.adapter.rxjava2.ResultObservable { *; }
+-keepclasseswithmembernames class  retrofit2.adapter.rxjava2.CallEnqueueObservable { *; }
+-keepclasseswithmembernames class  retrofit2.adapter.rxjava2.CallExecuteObservable { *; }
+
+
 
 #retrofit2
 -dontwarn retrofit2.**
--keep class retrofit2.** { *; }
+#-keep class retrofit2.** { *; }
+
+
+
+
 -keepattributes Signature
 -keepattributes Exceptions
 
 -dontwarn org.robovm.**
--keep class org.robovm.** { *; }
+#-keep class org.robovm.** { *; }
 
 #okhttp3
 -dontwarn com.squareup.okhttp3.**
--keep class com.squareup.okhttp3.** { *;}
--keep class okhttp3.** { *;}
--keep class okio.** { *;}
+#-keep class okhttp3.internal.**{*;}
+#-keep class com.squareup.okhttp3.** { *;}
+#-keep class okhttp3.** { *;}
+#-keep class okio.** { *;}
 -dontwarn sun.security.**
 -keep class sun.security.** { *;}
 -dontwarn okio.**
@@ -23,19 +46,28 @@
 
 #rxjava
 -dontwarn rx.**
--keep class rx.** { *; }
+#-keep class rx.** { *; }
 
--dontwarn sun.misc.**
+
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
- long producerIndex;
- long consumerIndex;
+    long producerIndex;
+    long consumerIndex;
 }
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
- rx.internal.util.atomic.LinkedQueueNode producerNode;
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
 }
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
- rx.internal.util.atomic.LinkedQueueNode consumerNode;
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
+
+# Gson
+#-keep class com.google.gson.stream.** { *; }
+#-keepattributes EnclosingMethod
+
+#APP
+
+-keep class ren.yale.android.retrofitcachetest.** { *; }
+
 #-------------------------------------------基本不用动区域--------------------------------------------
 #---------------------------------基本指令区----------------------------------
 -optimizationpasses 5
