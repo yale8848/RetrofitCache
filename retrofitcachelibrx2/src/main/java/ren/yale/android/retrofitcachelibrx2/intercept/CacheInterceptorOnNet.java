@@ -1,10 +1,10 @@
-package com.daoxuehao.android.retrofitcachelibrx2.intercept;
+package ren.yale.android.retrofitcachelibrx2.intercept;
 
 import android.text.TextUtils;
 
-import com.daoxuehao.android.retrofitcachelibrx2.CacheInterceptorListener;
-import com.daoxuehao.android.retrofitcachelibrx2.RetrofitCache;
-import com.daoxuehao.android.retrofitcachelibrx2.util.LogUtil;
+import ren.yale.android.retrofitcachelibrx2.CacheInterceptorListener;
+import ren.yale.android.retrofitcachelibrx2.RetrofitCache;
+import ren.yale.android.retrofitcachelibrx2.util.LogUtil;
 
 import java.io.IOException;
 

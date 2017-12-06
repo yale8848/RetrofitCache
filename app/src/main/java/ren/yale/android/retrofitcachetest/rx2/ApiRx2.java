@@ -14,7 +14,7 @@ import retrofit2.http.GET;
 public interface ApiRx2 {
 
     @Cache(time = 5,timeUnit = TimeUnit.SECONDS)
-    @GET("Android/10/1")
+    @GET("Android/9/1")
     Observable<GankAndroid> getGankAndroid();
 
 }

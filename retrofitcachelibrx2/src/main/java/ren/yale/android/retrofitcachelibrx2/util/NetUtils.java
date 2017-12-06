@@ -1,4 +1,4 @@
-package com.daoxuehao.android.retrofitcachelibrx2.util;
+package ren.yale.android.retrofitcachelibrx2.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

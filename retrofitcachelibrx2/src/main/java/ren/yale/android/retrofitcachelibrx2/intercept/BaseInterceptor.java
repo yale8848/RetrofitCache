@@ -1,8 +1,8 @@
-package com.daoxuehao.android.retrofitcachelibrx2.intercept;
+package ren.yale.android.retrofitcachelibrx2.intercept;
 
-import com.daoxuehao.android.retrofitcachelibrx2.RetrofitCache;
-import com.daoxuehao.android.retrofitcachelibrx2.anno.Mock;
-import com.daoxuehao.android.retrofitcachelibrx2.util.LogUtil;
+import ren.yale.android.retrofitcachelibrx2.RetrofitCache;
+import ren.yale.android.retrofitcachelibrx2.anno.Mock;
+import ren.yale.android.retrofitcachelibrx2.util.LogUtil;
 
 import okhttp3.Interceptor;
 import okhttp3.Protocol;

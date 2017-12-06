@@ -1,12 +1,11 @@
-package com.daoxuehao.android.retrofitcachelibrx2.transformer;
+package ren.yale.android.retrofitcachelibrx2.transformer;
 
-
-import com.daoxuehao.android.retrofitcachelibrx2.RetrofitCache;
 
 import java.lang.reflect.Field;
 
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
+import ren.yale.android.retrofitcachelibrx2.RetrofitCache;
 
 /**
  * Created by Yale on 2017/6/14.
