@@ -2,8 +2,8 @@
 
 [English](README_EN.md)
 
-[![](https://img.shields.io/badge/jcenter-retrofitcache_1.0.5-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.0.4)
-[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.0.5-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.0.4)
+[![](https://img.shields.io/badge/jcenter-retrofitcache_1.0.6-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.0.4)
+[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.0.6-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.0.4)
 
 RetrofitCache让retrofit2+okhttp3+rxjava 配置缓存如此简单。通过注解配置，可以针对每一个接口灵活配置缓存策略；同时让每一个接口方便支持数据模拟，可以代码减小侵入性，模拟数据可以从内存，Assets，url轻松获取。
 
@@ -46,6 +46,14 @@ Observable<HttpResult> test();
 Observable<HttpResult> test();
  ```
 
+- 默认在无网的时候强制走缓存，forceCacheNoNet=false时无网络时不强制缓存
+
+ ```
+@Cache(forceCacheNoNet = false)
+@GET("users")
+Observable<HttpResult> test();
+ ```
+
 - 添加模拟数据（value,assets,url同时都配置的话，就按照这个顺序处理）
 
  ```
@@ -74,8 +82,8 @@ Observable<HttpResult> test();
  - 添加 jcenter lib,注意根据自己的库选择
 
  ```
-compile 'ren.yale.android:retrofitcachelib:1.0.5'   //retrofit2+okhttp3+rxjava1
-compile 'ren.yale.android:retrofitcachelibrx2:1.0.5'   //retrofit2+okhttp3+rxjava2
+compile 'ren.yale.android:retrofitcachelib:1.0.6'   //retrofit2+okhttp3+rxjava1
+compile 'ren.yale.android:retrofitcachelibrx2:1.0.6'   //retrofit2+okhttp3+rxjava2
  ```
 
  - 在Android Application里初始化
