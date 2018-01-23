@@ -17,4 +17,6 @@ import java.util.concurrent.TimeUnit;
 public @interface Cache {
     TimeUnit timeUnit()  default TimeUnit.NANOSECONDS;
     long time() default -1;
+    boolean forceCacheNoNet() default true;
+
 }
