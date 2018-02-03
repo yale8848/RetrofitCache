@@ -26,6 +26,7 @@ public class MainActivity extends Activity {
         OKHttpUtilsRx1.INSTANCE.init(this.getApplication());
         OKHttpUtilsRx2.INSTANCE.init(this.getApplication());
         RetrofitCache.getInstance().init(this).enableMock(true);
+        RetrofitCache.getInstance().addIgnoreParam("access_token");
         setContentView(R.layout.activity_main);
         mTextView = (TextView) findViewById(R.id.tv_content);
     }

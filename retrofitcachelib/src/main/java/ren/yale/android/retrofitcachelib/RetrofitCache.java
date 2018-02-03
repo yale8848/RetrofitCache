@@ -8,7 +8,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
@@ -33,6 +35,7 @@ public class RetrofitCache {
     private TimeUnit mDefaultTimeUnit =TimeUnit.SECONDS;
     private Map mUrlAragsMap =null;
     private CacheInterceptorListener mCacheInterceptorListener;
+    private Set<String> mIgnoreParam;
 
     private boolean mMock = true;
 
@@ -71,6 +74,17 @@ public class RetrofitCache {
     public RetrofitCache init(Context context){
         mContext = context.getApplicationContext();
         return this;
+    }
+
+    public RetrofitCache addIgnoreParam(String param){
+        if (mIgnoreParam==null){
+            mIgnoreParam = new HashSet<>();
+        }
+        mIgnoreParam.add(param);
+        return this;
+    }
+    public Set<String> getIgnoreParam(){
+        return mIgnoreParam;
     }
 
     public void addMethodInfo(Object serviceMethod,Object[] args){
