@@ -24,7 +24,7 @@ public class CacheForceInterceptorNoNet extends BaseInterceptor implements Inter
         if (mockResponse!=null){
             return mockResponse;
         }
-        String url = request.url().url().toString();
+        String url = getOriginUrl(request.url().url().toString());
         boolean forceCacheNoNet =  RetrofitCache.getInstance().getCacheTime(url).isForceCacheNoNet();
         if (forceCacheNoNet&&!NetUtils.isConnectNet(RetrofitCache.getInstance().getContext())){
             request = request.newBuilder()

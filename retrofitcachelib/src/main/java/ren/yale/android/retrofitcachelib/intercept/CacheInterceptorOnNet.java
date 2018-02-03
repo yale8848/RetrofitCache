@@ -23,7 +23,7 @@ public class CacheInterceptorOnNet extends BaseInterceptor implements Intercepto
         if (mockResponse!=null){
             return mockResponse;
         }
-        String url = request.url().url().toString();
+        String url = getOriginUrl(request.url().url().toString());
 
         String mockPreUrl = request.header(KEY_HEADER_PRE_URL);
         if (!TextUtils.isEmpty(mockPreUrl)){

@@ -1,7 +1,7 @@
 # RetrofitCache
 
-[![](https://img.shields.io/badge/jcenter-retrofitcache_1.0.6-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.0.4)
-[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.0.6-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.0.4)
+[![](https://img.shields.io/badge/jcenter-retrofitcache_1.0.7-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.0.4)
+[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.0.7-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.0.4)
 
 RetrofitCache let retrofit2,okhttp3,rxjava add cache so easy. You can config cache strategy with each api by annotation.Also you can config mock data with each api easily.
 
@@ -80,8 +80,8 @@ Observable<HttpResult> test();
  - Add jcenter lib,notice chose different with you project
 
  ```
-compile 'ren.yale.android:retrofitcachelib:1.0.6'   //retrofit2+okhttp3+rxjava1
-compile 'ren.yale.android:retrofitcachelibrx2:1.0.6'   //retrofit2+okhttp3+rxjava2
+compile 'ren.yale.android:retrofitcachelib:1.0.7'   //retrofit2+okhttp3+rxjava1
+compile 'ren.yale.android:retrofitcachelibrx2:1.0.7'   //retrofit2+okhttp3+rxjava2
  ```
 
  - Init in Android Application
@@ -168,7 +168,11 @@ RetrofitCache.getInstance().setCacheInterceptorListener(
 ```
 RetrofitCache.getInstance().enableMock(false);
 ```
+- Ignore some param. If you add some param in url, you can call addIgnoreParam.
 
+```
+ RetrofitCache.getInstance().addIgnoreParam("access_token");
+```
 
 ## Proguard
 

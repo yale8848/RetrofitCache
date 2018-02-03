@@ -1,5 +1,7 @@
 package ren.yale.android.retrofitcachelibrx2.intercept;
 
+import java.util.Set;
+
 import ren.yale.android.retrofitcachelibrx2.RetrofitCache;
 import ren.yale.android.retrofitcachelibrx2.anno.Mock;
 import ren.yale.android.retrofitcachelibrx2.util.LogUtil;
@@ -23,18 +25,43 @@ public class BaseInterceptor {
             return null;
         }
         Request request = chain.request();
-        String url = request.url().url().toString();
+        String url = getOriginUrl(request.url().url().toString());
         Mock mock = RetrofitCache.getInstance().getMockObject(url);
         return  RetrofitCache.getInstance().getMockUrl(mock);
     }
+    protected  String getOriginUrl(String url){
 
+        Set<String> params = RetrofitCache.getInstance().getIgnoreParam();
+        if (params==null){
+            return url;
+        }
+        for (String p:params) {
+
+            int index = url.indexOf(p+"=");
+            if (index>=0){
+                int end = url.indexOf("&",index);
+                url = url.substring(0,index);
+                if (end>=0){
+                    url +=url.substring(end+1);
+                }
+            }
+        }
+        if (url.length()>1){
+            char ch = url.charAt(url.length()-1);
+            if (ch=='?'||ch=='&'){
+                url = url.substring(0,url.length()-1);
+            }
+        }
+
+        return url;
+    }
     protected Response mockResponse(Interceptor.Chain chain){
         if (!RetrofitCache.getInstance().canMock()){
             return null;
         }
         Request request = chain.request();
         try{
-            String url = request.url().url().toString();
+            String url = getOriginUrl(request.url().url().toString());
             Mock mock = RetrofitCache.getInstance().getMockObject(url);
             String mockData = RetrofitCache.getInstance().getMockData(mock);
             if (mockData != null){
