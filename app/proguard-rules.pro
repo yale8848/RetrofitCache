@@ -12,7 +12,7 @@
 
 
 -dontwarn ren.yale.android.retrofitcachelibrx2.**
--keep ren.yale.android.retrofitcachelibrx2.** { *; }
+-keep class ren.yale.android.retrofitcachelibrx2.** { *; }
 -keepclasseswithmembernames class  retrofit2.adapter.rxjava2.BodyObservable { *; }
 -keepclasseswithmembernames class  retrofit2.adapter.rxjava2.ResultObservable { *; }
 -keepclasseswithmembernames class  retrofit2.adapter.rxjava2.CallEnqueueObservable { *; }

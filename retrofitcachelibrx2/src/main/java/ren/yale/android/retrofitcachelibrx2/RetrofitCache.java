@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import ren.yale.android.retrofitcachelibrx2.anno.Cache;
 import ren.yale.android.retrofitcachelibrx2.anno.Mock;
+import ren.yale.android.retrofitcachelibrx2.bean.CacheConfig;
 import ren.yale.android.retrofitcachelibrx2.util.LogUtil;
 
 import java.io.InputStream;
@@ -12,7 +13,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +30,7 @@ public class RetrofitCache {
 
     private static volatile RetrofitCache mRetrofit;
     private Vector<Map> mVector;
-    private Map<String,Long> mUrlMap;
+    private Map<String,CacheConfig> mUrlMap;
 
     private Context mContext;
     private Long mDefaultTime = 0L;
@@ -38,6 +41,7 @@ public class RetrofitCache {
     private CacheInterceptorListener mCacheInterceptorListener;
     private boolean mMock = true;
 
+    private Set<String> mIgnoreParam;
 
     private RetrofitCache(){
         clear();
@@ -75,6 +79,18 @@ public class RetrofitCache {
     public boolean canMock(){
         return mMock;
     }
+
+    public RetrofitCache addIgnoreParam(String param){
+        if (mIgnoreParam==null){
+            mIgnoreParam = new HashSet<>();
+        }
+        mIgnoreParam.add(param);
+        return this;
+    }
+    public Set<String> getIgnoreParam(){
+        return mIgnoreParam;
+    }
+
     public void addMethodInfo(Object serviceMethod,Object[] args){
         String url = "";
         try {
@@ -198,11 +214,12 @@ public class RetrofitCache {
         return null;
     }
 
-    public Long getCacheTime(String url){
+    public CacheConfig getCacheTime(String url){
+        CacheConfig cacheConfig = new CacheConfig();
         if (mUrlMap!=null){
-            Long type = mUrlMap.get(url);
-            if (type!=null){
-                return type;
+            CacheConfig config = mUrlMap.get(url);
+            if (config!=null){
+                return config;
             }
         }
         for (Map serviceMethodCache:mVector) {
@@ -227,11 +244,13 @@ public class RetrofitCache {
                                     t = cache.time();
                                 }
                                 long tm =  timeUnit.toSeconds(t);
-                                getUrlMap().put(url, tm);
-                                return tm;
+                                cacheConfig.setTime(tm);
+                                cacheConfig.setForceCacheNoNet(cache.forceCacheNoNet());
+                                getUrlMap().put(url, cacheConfig);
+                                return cacheConfig;
                             }else{
-                                getUrlMap().put(url, 0L);
-                                return 0L;
+                                getUrlMap().put(url, cacheConfig);
+                                return cacheConfig;
                             }
                         }
                     }
@@ -240,12 +259,12 @@ public class RetrofitCache {
                 }
             }
         }
-        getUrlMap().put(url, 0L);
-        return 0L;
+        getUrlMap().put(url, cacheConfig);
+        return cacheConfig;
     }
     private Map getUrlMap(){
         if (mUrlMap==null){
-            mUrlMap = new HashMap<String, Long>();
+            mUrlMap = new HashMap<String, CacheConfig>();
         }
         return  mUrlMap;
     }

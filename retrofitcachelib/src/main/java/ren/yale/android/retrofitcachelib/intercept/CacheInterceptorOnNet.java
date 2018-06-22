@@ -23,14 +23,14 @@ public class CacheInterceptorOnNet extends BaseInterceptor implements Intercepto
         if (mockResponse!=null){
             return mockResponse;
         }
-        String url = request.url().url().toString();
+        String url = getOriginUrl(request.url().url().toString());
 
         String mockPreUrl = request.header(KEY_HEADER_PRE_URL);
         if (!TextUtils.isEmpty(mockPreUrl)){
             url = mockPreUrl;
         }
 
-        Long maxAge = RetrofitCache.getInstance().getCacheTime(url);
+        Long maxAge = RetrofitCache.getInstance().getCacheTime(url).getTime();
         Response response = chain.proceed(request);
         LogUtil.d("get data from net = "+response.code());
         CacheInterceptorListener listener = RetrofitCache.getInstance().getCacheInterceptorListener();
