@@ -1,16 +1,17 @@
 package ren.yale.android.retrofitcachelibrx2.intercept;
 
 import java.util.Set;
-
-import ren.yale.android.retrofitcachelibrx2.RetrofitCache;
-import ren.yale.android.retrofitcachelibrx2.anno.Mock;
-import ren.yale.android.retrofitcachelibrx2.util.LogUtil;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.Interceptor;
 import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import ren.yale.android.retrofitcachelibrx2.RetrofitCache;
+import ren.yale.android.retrofitcachelibrx2.anno.Mock;
+import ren.yale.android.retrofitcachelibrx2.util.LogUtil;
 
 /**
  * Created by Yale on 2017/7/5.
@@ -35,24 +36,20 @@ public class BaseInterceptor {
         if (params==null){
             return url;
         }
-        for (String p:params) {
-
-            int index = url.indexOf(p+"=");
-            if (index>=0){
-                int end = url.indexOf("&",index);
-                url = url.substring(0,index);
-                if (end>=0){
-                    url +=url.substring(end+1);
+        for (String p:params){
+            Pattern pattern = Pattern.compile(String.format("[\\?|&]%s=.*&|[\\?|&]%s=.*",p,p));
+            Matcher m = pattern.matcher(url);
+            while (m.find()){
+                String rep = "";
+                if (m.group().startsWith("?")){
+                    rep="?";
                 }
+                url = m.replaceAll(rep);
             }
         }
-        if (url.length()>1){
-            char ch = url.charAt(url.length()-1);
-            if (ch=='?'||ch=='&'){
-                url = url.substring(0,url.length()-1);
-            }
+        if (url.endsWith("?")){
+            return url.substring(0,url.length()-1);
         }
-
         return url;
     }
     protected Response mockResponse(Interceptor.Chain chain){
