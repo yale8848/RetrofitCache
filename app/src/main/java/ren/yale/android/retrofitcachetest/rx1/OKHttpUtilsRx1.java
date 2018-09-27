@@ -37,6 +37,7 @@ public enum OKHttpUtilsRx1 {
         if (apiRx1 ==null){
             apiRx1 = configRetrofit(ApiRx1.class,"http://gank.io/api/data/");
         }
+        RetrofitCache.getInstance().init(context);
         RetrofitCache.getInstance().setCacheInterceptorListener(
                 new CacheInterceptorListener() {
             @Override
