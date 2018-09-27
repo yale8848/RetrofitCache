@@ -29,8 +29,6 @@ public class CacheForceInterceptorNoNet extends BaseInterceptor implements Inter
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
-
-            LogUtil.d("get data from cache");
         }
 
         String mockUrl = mockUrl(chain);
@@ -39,10 +37,17 @@ public class CacheForceInterceptorNoNet extends BaseInterceptor implements Inter
                     .build();
         }
         Response response = chain.proceed(request);
-        if (response.code() == 504){
-            LogUtil.d("not find in cache, go to chain");
+        int code = response.code();
+        if ( code == 504){
             response = chain.proceed(chain.request());
         }
+        if(response.networkResponse()!=null){
+            LogUtil.d("get data from net");
+        } else
+        if (response.cacheResponse()!=null){
+            LogUtil.d("get data from cache");
+        }
+
         return response;
     }
 }

@@ -52,7 +52,7 @@ public class CacheTransformer {
                         fdserviceMethod.setAccessible(true);
                         serviceMethodObj =  fdserviceMethod.get(OkhttpCallObj);
 
-                        LogUtil.d("CacheTransformer refelect time cost: "+(System.currentTimeMillis()-startTime)+"ms");
+                       // LogUtil.d("CacheTransformer refelect time cost: "+(System.currentTimeMillis()-startTime)+"ms");
                         if (serviceMethodObj!=null){
                             RetrofitCache.getInstance().addMethodInfo(serviceMethodObj,args);
                         }

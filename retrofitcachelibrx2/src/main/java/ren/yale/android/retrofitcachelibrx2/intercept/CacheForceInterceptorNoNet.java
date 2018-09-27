@@ -1,15 +1,14 @@
 package ren.yale.android.retrofitcachelibrx2.intercept;
 
-import ren.yale.android.retrofitcachelibrx2.RetrofitCache;
-import ren.yale.android.retrofitcachelibrx2.util.LogUtil;
-import ren.yale.android.retrofitcachelibrx2.util.NetUtils;
-
 import java.io.IOException;
 
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import ren.yale.android.retrofitcachelibrx2.RetrofitCache;
+import ren.yale.android.retrofitcachelibrx2.util.LogUtil;
+import ren.yale.android.retrofitcachelibrx2.util.NetUtils;
 
 /**
  * Created by Yale on 2017/6/13.
@@ -30,8 +29,6 @@ public class CacheForceInterceptorNoNet extends BaseInterceptor implements Inter
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
-
-            LogUtil.d("get data from cache");
         }
 
         String mockUrl = mockUrl(chain);
@@ -40,10 +37,17 @@ public class CacheForceInterceptorNoNet extends BaseInterceptor implements Inter
                     .build();
         }
         Response response = chain.proceed(request);
-        if (response.code() == 504){
-            LogUtil.d("not find in cache, go to chain");
+        int code = response.code();
+        if ( code == 504){
             response = chain.proceed(chain.request());
         }
+        if(response.networkResponse()!=null){
+            LogUtil.d("get data from net");
+        } else
+        if (response.cacheResponse()!=null){
+            LogUtil.d("get data from cache");
+        }
+
         return response;
     }
 }

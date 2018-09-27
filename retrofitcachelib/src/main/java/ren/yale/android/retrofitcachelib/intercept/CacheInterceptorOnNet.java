@@ -9,7 +9,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import ren.yale.android.retrofitcachelib.CacheInterceptorListener;
 import ren.yale.android.retrofitcachelib.RetrofitCache;
-import ren.yale.android.retrofitcachelib.util.LogUtil;
+import ren.yale.android.retrofitcachelib.bean.CacheConfig;
 
 /**
  * Created by Yale on 2017/6/13.
@@ -30,9 +30,14 @@ public class CacheInterceptorOnNet extends BaseInterceptor implements Intercepto
             url = mockPreUrl;
         }
 
-        Long maxAge = RetrofitCache.getInstance().getCacheTime(url).getTime();
+        CacheConfig cacheConfig = RetrofitCache.getInstance().getCacheTime(url);
+        Long maxAge = cacheConfig.getTime();
         Response response = chain.proceed(request);
-        LogUtil.d("get data from net = "+response.code());
+
+        if (response.code()==301||response.code()==302){
+            String location = response.headers().get("Location");
+            RetrofitCache.getInstance().addUrlArgs(location,cacheConfig);
+        }
         CacheInterceptorListener listener = RetrofitCache.getInstance().getCacheInterceptorListener();
 
         if (listener!=null&&!listener.canCache(request,response)){
