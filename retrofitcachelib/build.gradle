@@ -3,8 +3,8 @@ apply plugin: 'com.android.library'
 //group='com.github.yale8848'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         minSdkVersion 14

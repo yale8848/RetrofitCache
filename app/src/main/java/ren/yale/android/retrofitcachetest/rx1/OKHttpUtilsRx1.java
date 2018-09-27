@@ -55,7 +55,7 @@ public enum OKHttpUtilsRx1 {
         clientBuilder.addInterceptor(new LogInterceptor());
         clientBuilder.addInterceptor(new CacheForceInterceptorNoNet());
         clientBuilder.addNetworkInterceptor(new CacheInterceptorOnNet());
-
+        clientBuilder.retryOnConnectionFailure(true);
         int cacheSize = 200 * 1024 * 1024;
         File cacheDirectory = new File(mContext.getCacheDir(), "httpcache");
         Cache cache = new Cache(cacheDirectory, cacheSize);
@@ -90,7 +90,7 @@ public enum OKHttpUtilsRx1 {
             okhttp3.MediaType mediaType = response.body().contentType();
             String content = response.body().string();
 
-
+            LogTestUtil.d(response.headers().toString());
            // sb.append("======== request: "+request.toString()+"\r\n ======== request headers: "+request.headers().toString()+"\r\n======= response header:"+response.headers().toString()+"\r\n---------- response body:\r\n");
             LogTestUtil.d(sb.toString());
             try {

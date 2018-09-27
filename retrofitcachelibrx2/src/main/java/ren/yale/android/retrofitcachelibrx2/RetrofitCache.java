@@ -213,7 +213,19 @@ public class RetrofitCache {
         }
         return null;
     }
+    public void addUrlArgs(String url ,CacheConfig cacheConfig){
+        if (cacheConfig==null){
+            return;
+        }
+        if (TextUtils.isEmpty(url)){
+            return;
+        }
+        if (mUrlMap.containsKey(url)){
+            return;
+        }
+        mUrlMap.put(url,cacheConfig);
 
+    }
     public CacheConfig getCacheTime(String url){
         CacheConfig cacheConfig = new CacheConfig();
         if (mUrlMap!=null){

@@ -101,6 +101,8 @@ public class RetrofitCache {
         }
     }
 
+
+
     private String buildRequestUrl(Object serviceMethod,Object[] args) throws Exception{
         Class   clsServiceMethod =  Class.forName("retrofit2.ServiceMethod");
         Method toRequestMethod =  clsServiceMethod.getDeclaredMethod("toRequest", Object[].class );
@@ -210,7 +212,19 @@ public class RetrofitCache {
         }
         return null;
     }
+    public void addUrlArgs(String url ,CacheConfig cacheConfig){
+        if (cacheConfig==null){
+            return;
+        }
+        if (TextUtils.isEmpty(url)){
+            return;
+        }
+        if (mUrlMap.containsKey(url)){
+            return;
+        }
+        mUrlMap.put(url,cacheConfig);
 
+    }
     public CacheConfig getCacheTime(String url){
         CacheConfig cacheConfig = new CacheConfig();
         if (mUrlMap!=null){

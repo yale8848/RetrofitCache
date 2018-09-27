@@ -2,8 +2,6 @@ package ren.yale.android.retrofitcachetest.rx2;
 
 import android.content.Context;
 
-import ren.yale.android.retrofitcachelibrx2.transformer.CacheTransformer;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -17,10 +15,11 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import ren.yale.android.retrofitcachelib.CacheInterceptorListener;
-import ren.yale.android.retrofitcachelib.RetrofitCache;
-import ren.yale.android.retrofitcachelib.intercept.CacheForceInterceptorNoNet;
-import ren.yale.android.retrofitcachelib.intercept.CacheInterceptorOnNet;
+import ren.yale.android.retrofitcachelibrx2.CacheInterceptorListener;
+import ren.yale.android.retrofitcachelibrx2.RetrofitCache;
+import ren.yale.android.retrofitcachelibrx2.intercept.CacheForceInterceptorNoNet;
+import ren.yale.android.retrofitcachelibrx2.intercept.CacheInterceptorOnNet;
+import ren.yale.android.retrofitcachelibrx2.transformer.CacheTransformer;
 import ren.yale.android.retrofitcachetest.LogTestUtil;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
