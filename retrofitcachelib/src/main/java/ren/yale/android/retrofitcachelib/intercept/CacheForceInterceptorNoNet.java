@@ -33,6 +33,7 @@ public class CacheForceInterceptorNoNet extends BaseInterceptor implements Inter
 
         String mockUrl = mockUrl(chain);
         if (mockUrl!=null){
+            LogUtil.d("get data from mock url: "+mockUrl);
             request = request.newBuilder().url(mockUrl).header(KEY_HEADER_PRE_URL,request.url().toString())
                     .build();
         }

@@ -21,11 +21,10 @@ public class CacheTransformer {
             @Override
             public Observable<T> call(Observable<T> tObservable) {
                 Field fdOnSubscribe = null;
-                Object serviceMethodObj;
+                Object serviceMethodObj = null;
                 Object [] args;
                 try {
 
-                    long startTime = System.currentTimeMillis();
                     fdOnSubscribe = tObservable.getClass().getDeclaredField("onSubscribe");
                     fdOnSubscribe.setAccessible(true);
                     Object object = fdOnSubscribe.get(tObservable);
@@ -45,14 +44,27 @@ public class CacheTransformer {
 
                         Class clsOkhttpCall = Class.forName("retrofit2.OkHttpCall");
                         Field fdArgs = clsOkhttpCall.getDeclaredField("args");
+
+
                         fdArgs.setAccessible(true);
                         args = (Object[]) fdArgs.get(OkhttpCallObj);
 
-                        Field fdserviceMethod  = clsOkhttpCall.getDeclaredField("serviceMethod");
-                        fdserviceMethod.setAccessible(true);
-                        serviceMethodObj =  fdserviceMethod.get(OkhttpCallObj);
+                        Field fdserviceMethod  = null;
+                        try {
+                            fdserviceMethod= clsOkhttpCall.getDeclaredField("serviceMethod");
+                        }catch (Exception e){
 
-                       // LogUtil.d("CacheTransformer refelect time cost: "+(System.currentTimeMillis()-startTime)+"ms");
+                        }
+                        if (fdserviceMethod == null){
+                            Field filedRequestFactory= clsOkhttpCall.getDeclaredField("requestFactory");
+                            filedRequestFactory.setAccessible(true);
+                            serviceMethodObj = filedRequestFactory.get(OkhttpCallObj);
+
+                        }else{
+                            fdserviceMethod.setAccessible(true);
+                            serviceMethodObj =  fdserviceMethod.get(OkhttpCallObj);
+                        }
+
                         if (serviceMethodObj!=null){
                             RetrofitCache.getInstance().addMethodInfo(serviceMethodObj,args);
                         }

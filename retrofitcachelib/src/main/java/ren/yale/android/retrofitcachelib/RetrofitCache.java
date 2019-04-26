@@ -104,14 +104,32 @@ public class RetrofitCache {
 
 
     private String buildRequestUrl(Object serviceMethod,Object[] args) throws Exception{
-        Class   clsServiceMethod =  Class.forName("retrofit2.ServiceMethod");
-        Method toRequestMethod =  clsServiceMethod.getDeclaredMethod("toRequest", Object[].class );
+
+        String objName = serviceMethod.getClass().getName();
+        Method toRequestMethod = null;
+
+
+        if (objName.equals("retrofit2.HttpServiceMethod")){
+            Class   clsHttpServiceMethod =  Class.forName("retrofit2.HttpServiceMethod");
+            Field fieldRequestFactory = clsHttpServiceMethod.getDeclaredField("requestFactory");
+            fieldRequestFactory.setAccessible(true);
+            serviceMethod = fieldRequestFactory.get(serviceMethod);
+            objName = serviceMethod.getClass().getName();
+        }
+
+        if (objName.equals("retrofit2.RequestFactory")){
+            Class   clsServiceMethod =  Class.forName("retrofit2.RequestFactory");
+            toRequestMethod =  clsServiceMethod.getDeclaredMethod("create", Object[].class );
+        }else{
+            Class   clsServiceMethod =  Class.forName("retrofit2.ServiceMethod");
+            toRequestMethod =  clsServiceMethod.getDeclaredMethod("toRequest", Object[].class );
+        }
         toRequestMethod.setAccessible(true);
         try {
             Request request = (Request) toRequestMethod.invoke(serviceMethod,new Object[]{args});
             return request.url().toString();
         }catch (Exception e){
-            LogUtil.l(e);
+            //LogUtil.l(e);
         }
         return "";
     }

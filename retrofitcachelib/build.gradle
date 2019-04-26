@@ -21,7 +21,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
     implementation 'io.reactivex:rxjava:1.2.4'
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'

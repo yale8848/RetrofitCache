@@ -1,7 +1,7 @@
 # RetrofitCache
 
-[![](https://img.shields.io/badge/jcenter-retrofitcache_1.0.9-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.0.4)
-[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.0.9-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.0.4)
+[![](https://img.shields.io/badge/jcenter-retrofitcache_1.1.0-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.1.0)
+[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.1.0-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.1.0)
 
 RetrofitCache let retrofit2,okhttp3,rxjava add cache so easy. You can config cache strategy with each api by annotation.Also you can config mock data with each api easily.
 
@@ -80,8 +80,8 @@ Observable<HttpResult> test();
  - Add jcenter lib,notice chose different with you project
 
  ```
-compile 'ren.yale.android:retrofitcachelib:1.0.9'   //retrofit2+okhttp3+rxjava1
-compile 'ren.yale.android:retrofitcachelibrx2:1.0.9'   //retrofit2+okhttp3+rxjava2
+compile 'ren.yale.android:retrofitcachelib:1.1.0'   //retrofit2+okhttp3+rxjava1
+compile 'ren.yale.android:retrofitcachelibrx2:1.1.0'   //retrofit2+okhttp3+rxjava2
  ```
 
  - Init in Android Application
@@ -233,6 +233,10 @@ RetrofitCache.getInstance().enableMock(false);
 -keepclasseswithmembernames class retrofit2.ServiceMethod { *; }
 -keepclasseswithmembernames class retrofit2.OkHttpCall { *; }
 
+###retrofit2 2.5.0
+-keepclasseswithmembernames class retrofit2.HttpServiceMethod {*;}
+-keepclasseswithmembernames class retrofit2.RequestFactory {*;}
+
 #retrofit2,okhttp3,rxjava1 and other Proguard config add by yourself
 
 ```
@@ -248,6 +252,10 @@ RetrofitCache.getInstance().enableMock(false);
 -keepclasseswithmembernames class retrofit2.Retrofit { *; }
 -keepclasseswithmembernames class retrofit2.ServiceMethod { *; }
 -keepclasseswithmembernames class retrofit2.OkHttpCall { *; }
+
+###retrofit2 2.5.0
+-keepclasseswithmembernames class retrofit2.HttpServiceMethod {*;}
+-keepclasseswithmembernames class retrofit2.RequestFactory {*;}
 
 #retrofit2,okhttp3,rxjava2 and other Proguard config add by yourself
 
