@@ -36,7 +36,8 @@ public class CacheTransformer {
     private static <T> void observable(io.reactivex.Observable<T> up){
 
         try {
-
+            Object serviceMethodObj = null;
+            Object [] args;
             Field upstream = up.getClass().getDeclaredField("upstream");
             upstream.setAccessible(true);
 
@@ -58,12 +59,26 @@ public class CacheTransformer {
 
             Class clsOkhttpCall = Class.forName("retrofit2.OkHttpCall");
             Field fdArgs = clsOkhttpCall.getDeclaredField("args");
-            fdArgs.setAccessible(true);
-            Object []args = (Object[]) fdArgs.get(OkhttpCallObj);
 
-            Field fdserviceMethod  = clsOkhttpCall.getDeclaredField("serviceMethod");
-            fdserviceMethod.setAccessible(true);
-            Object serviceMethodObj =  fdserviceMethod.get(OkhttpCallObj);
+
+            fdArgs.setAccessible(true);
+            args = (Object[]) fdArgs.get(OkhttpCallObj);
+
+            Field fdserviceMethod  = null;
+            try {
+                fdserviceMethod= clsOkhttpCall.getDeclaredField("serviceMethod");
+            }catch (Exception e){
+
+            }
+            if (fdserviceMethod == null){
+                Field filedRequestFactory= clsOkhttpCall.getDeclaredField("requestFactory");
+                filedRequestFactory.setAccessible(true);
+                serviceMethodObj = filedRequestFactory.get(OkhttpCallObj);
+
+            }else{
+                fdserviceMethod.setAccessible(true);
+                serviceMethodObj =  fdserviceMethod.get(OkhttpCallObj);
+            }
 
             if (serviceMethodObj!=null){
                 RetrofitCache.getInstance().addMethodInfo(serviceMethodObj,args);

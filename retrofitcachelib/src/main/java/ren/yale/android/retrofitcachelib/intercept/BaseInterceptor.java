@@ -69,7 +69,7 @@ public class BaseInterceptor {
             if (mockData != null){
                 LogUtil.d("get data from mock");
                 Response response = new Response.Builder().protocol(Protocol.HTTP_1_0)
-                        .code(200).request(request).body(ResponseBody.create(null,mockData))
+                        .code(200).request(request).message("ok").body(ResponseBody.create(null,mockData))
                         .build();
                 return response;
             }
@@ -80,7 +80,7 @@ public class BaseInterceptor {
                 if (md!=null){
                     LogUtil.d("get data from asset: "+mockAssets);
                     Response response = new Response.Builder().protocol(Protocol.HTTP_1_0)
-                            .code(200).request(request).body(ResponseBody.create(null,md))
+                            .code(200).request(request).message("ok").body(ResponseBody.create(null,md))
                             .build();
                     return response;
                 }
