@@ -2,8 +2,8 @@
 
 [English](README_EN.md)
 
-[![](https://img.shields.io/badge/jcenter-retrofitcache_1.1.0-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.1.0)
-[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.1.0-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.1.0)
+[![](https://img.shields.io/badge/jcenter-retrofitcache_1.1.1-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.1.1)
+[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.1.1-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.1.1)
 
 RetrofitCache让retrofit2+okhttp3+rxjava 配置缓存如此简单。通过注解配置，可以针对每一个接口灵活配置缓存策略；同时让每一个接口方便支持数据模拟，可以代码减小侵入性，模拟数据可以从内存，Assets，url轻松获取。
 
@@ -82,8 +82,8 @@ Observable<HttpResult> test();
  - 添加 jcenter lib,注意根据自己的库选择
 
  ```
-compile 'ren.yale.android:retrofitcachelib:1.1.0'   //retrofit2+okhttp3+rxjava1
-compile 'ren.yale.android:retrofitcachelibrx2:1.1.0'   //retrofit2+okhttp3+rxjava2
+compile 'ren.yale.android:retrofitcachelib:1.1.1'   //retrofit2+okhttp3+rxjava1
+compile 'ren.yale.android:retrofitcachelibrx2:1.1.1'   //retrofit2+okhttp3+rxjava2
  ```
 
  - 在Android Application里初始化
@@ -116,6 +116,8 @@ OkHttpClient client =  clientBuilder.cache(cache).build();
  ```
 okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
 ...
+
+//clientBuilder.addInterceptor(new MockInterceptor()); //如果只用Mock模拟功能,只需添加这个拦截器
 clientBuilder.addInterceptor(new CacheForceInterceptorNoNet());
 clientBuilder.addNetworkInterceptor(new CacheInterceptorOnNet());
 ...

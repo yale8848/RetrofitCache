@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "ren.yale.android.retrofitcachetest"
@@ -43,6 +43,12 @@ android {
 }
 
 dependencies {
+
+
+
+
+    //implementation 'ren.yale.android:retrofitcachelib:1.1.1'   //retrofit2+okhttp3+rxjava1
+    //implementation 'ren.yale.android:retrofitcachelibrx2:1.1.1'   //retrofit2+okhttp3+rxjava2
 
 
     implementation project(':retrofitcachelib')

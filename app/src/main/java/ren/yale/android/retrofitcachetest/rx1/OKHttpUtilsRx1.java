@@ -54,6 +54,7 @@ public enum OKHttpUtilsRx1 {
         clientBuilder.connectTimeout(20, TimeUnit.SECONDS);
         clientBuilder.writeTimeout(20, TimeUnit.SECONDS);
         clientBuilder.addInterceptor(new LogInterceptor());
+        //clientBuilder.addInterceptor(new MockInterceptor());
         clientBuilder.addInterceptor(new CacheForceInterceptorNoNet());
         clientBuilder.addNetworkInterceptor(new CacheInterceptorOnNet());
         clientBuilder.retryOnConnectionFailure(true);
