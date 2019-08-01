@@ -1,7 +1,7 @@
 # RetrofitCache
 
-[![](https://img.shields.io/badge/jcenter-retrofitcache_1.1.0-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.1.0)
-[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.1.0-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.1.0)
+[![](https://img.shields.io/badge/jcenter-retrofitcache_1.1.1-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcache/1.1.1)
+[![](https://img.shields.io/badge/jcenter-retrofitcacherx2_1.1.1-519dd9.svg)](https://bintray.com/yale8848/maven/retrofitcacherx2/1.1.1)
 
 RetrofitCache let retrofit2,okhttp3,rxjava add cache so easy. You can config cache strategy with each api by annotation.Also you can config mock data with each api easily.
 
@@ -80,8 +80,8 @@ Observable<HttpResult> test();
  - Add jcenter lib,notice chose different with you project
 
  ```
-compile 'ren.yale.android:retrofitcachelib:1.1.0'   //retrofit2+okhttp3+rxjava1
-compile 'ren.yale.android:retrofitcachelibrx2:1.1.0'   //retrofit2+okhttp3+rxjava2
+compile 'ren.yale.android:retrofitcachelib:1.1.1'   //retrofit2+okhttp3+rxjava1
+compile 'ren.yale.android:retrofitcachelibrx2:1.1.1'   //retrofit2+okhttp3+rxjava2
  ```
 
  - Init in Android Application
@@ -114,6 +114,8 @@ OkHttpClient client =  clientBuilder.cache(cache).build();
  ```
 okhttp3.OkHttpClient.Builder clientBuilder=new okhttp3.OkHttpClient.Builder();
 ...
+
+//clientBuilder.addInterceptor(new MockInterceptor()); //Only add this interceptor if only use Mock
 clientBuilder.addInterceptor(new CacheForceInterceptorNoNet());
 clientBuilder.addNetworkInterceptor(new CacheInterceptorOnNet());
 ...

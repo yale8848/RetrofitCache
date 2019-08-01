@@ -3,8 +3,8 @@ package ren.yale.android.retrofitcachetest.rx2;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import ren.yale.android.retrofitcachelib.anno.Cache;
 import ren.yale.android.retrofitcachelibrx2.anno.Mock;
-import ren.yale.android.retrofitcachelibrx2.anno.Cache;
 import ren.yale.android.retrofitcachetest.bean.GankAndroid;
 import retrofit2.http.GET;
 
