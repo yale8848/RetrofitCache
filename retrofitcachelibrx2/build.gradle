@@ -35,4 +35,4 @@ dependencies {
     implementation'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
 
 }
-apply from: './config/RetrofitCache.gradle'
+//apply from: './config/RetrofitCache.gradle'
